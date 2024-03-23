@@ -1,0 +1,9 @@
+**/.terraform/*
+**/.terraform.*
+*.tfstate
+*.tfstate.*
+*.pem
+*.key
+*.pub
+crash.log
+crash.*.log
