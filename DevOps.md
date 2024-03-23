@@ -13,13 +13,13 @@ This project aims to create full CI/CD Pipeline for microservice based applicati
 | Local Development Environment | Prepare GitHub Repository for the Project | MSP-1 | Clone the gallery app from the  repository [Gallery Microservices Application](https://github.com/muskrt/gallery-microservice.git) |
 | Local Development Environment | Prepare GitHub Repository for the Project | MSP-2 | Prepare base branches namely `main` , `dev` , `release` for DevOps cycle. |
 | Local Development Environment | Prepare Development Server Terraform Files | MSP-3 |  Prepare development server folder with Terraform File for developers, enabled with `Docker` , `Docker-Compose` , `Git` `golang v1.0.22`. | feature/msp_devops_3 |
-| CI Server Setup | Prepare Jenkins Server | MSP-4 | Prepare Jenkins Server for CI/CD Pipeline. | feature/msp_4 |
-| Local Development Environment | Check the Golang Build Setup on Dev Branch | MSP- | Check the Golang builds for `test` , `package` , and `install` phases on `dev` branch |
-| Local Development Environment | Prepare a Script for Building  Packaging the Application | MSP-4 |  Prepare a script to build and package the application with Golang  | feature/msp_4 |
-| Local Development Build | Prepare Dockerfiles for Microservices | MSP-5 | Prepare Dockerfiles for each microservices. | feature/msp_5 |
-| Local Development Environment | Prepare Script for Building Docker Images | MSP-7 |  Prepare a script to package and build the docker images for all microservices. | feature/msp-7 |
-| Local Development Build | Create Docker Compose File for Local Development | MSP-8-1 |  Prepare docker compose file to deploy the application locally. | feature/msp-8 |
-| Local Development Build | Create Docker Compose File for Local Development | MSP-8-2 |  Prepare a script to test the deployment of the app locally. | feature/msp-8 |
+| CI Server Setup | Prepare Jenkins Server | MSP-4 | Prepare Jenkins Server for CI/CD Pipeline. | feature/msp_devops_4 |
+| Local Development Environment | Check the Golang Build Setup on Dev Branch | MSP-5 | Check the Golang builds for `test` , `package` , and `install` phases on `dev` branch |
+| Local Development Environment | Prepare a Script for Building  Packaging the Application | MSP-6 |  Prepare a script to build and package the application with Golang  | feature/msp_devops_6 |
+| Local Development Build | Prepare Dockerfiles for Microservices | MSP-7 | Prepare Dockerfiles for each microservices. | feature/msp_devops_7 |
+| Local Development Environment | Prepare Script for Building Docker Images | MSP-8 |  Prepare a script to package and build the docker images for all microservices. | feature/msp_devops_8 |
+| Local Development Build | Create Docker Compose File for Local Development | MSP-9 |  Prepare docker compose file to deploy the application locally. | feature/msp_devops_9 |
+| Local Development Build | Create Docker Compose File for Local Development | MSP-9 |  Prepare a script to test the deployment of the app locally. | feature/msp_devops_10 |
 | Local Development Environment | Prepare a Script for Packaging the Application | MSP-4 |  Prepare a script to push the images to registry  | feature/msp_4 |
 | CI Server Setup | Configure Jenkins Server for Project | MSP-10  | Configure Jenkins Server for Project Setup. | 
 | Testing Environment Setup | Implement Unit Tests | MSP-11  | Implement 1 Unit Tests locally. | feature/msp-11 |
