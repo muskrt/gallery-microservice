@@ -16,7 +16,7 @@ func loginPostController(ctx *gin.Context) {
 
 	username := ctx.PostForm("username")
 	fmt.Println("username is -------" + username)
-	// sucess, _ := http.Get("login_service/")
+	//resp, _ := http.Get("login_service/"+username+"&"+password)
 	// fmt.Println(sucess.Close)
 	ctx.HTML(http.StatusOK, "success.html", nil)
 }
