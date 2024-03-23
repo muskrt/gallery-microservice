@@ -1,8 +1,8 @@
 FROM golang:1.22-alpine
 WORKDIR /landing_service
-COPY go.mod ./
-RUN go mod download
+COPY go.mod go.sum ./
+RUN go mod download && go mod verify
 COPY *.go ./
-RUN go build -o .
+COPY templates/* ./templates/
 EXPOSE 8080
-CMD [ "landing_service" ]
+CMD go run .
