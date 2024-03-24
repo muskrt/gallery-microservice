@@ -19,10 +19,15 @@ This project aims to create full CI/CD Pipeline for microservice based applicati
 | Local Development Build | Prepare Dockerfiles for Microservices | MSP-7 | Prepare Dockerfiles for each microservices. | feature/msp_devops_7 |
 | Local Development Environment | Prepare Script for Building Docker Images | MSP-8 |  Prepare a script to package and build the docker images for all microservices. | feature/msp_devops_8 |
 | Local Development Build | Create Docker Compose File for Local Development | MSP-9 |  Prepare docker compose file to deploy the application locally. | feature/msp_devops_9 |
-| Local Development Build | Create Docker Compose File for Local Development | MSP-9 |  Prepare a script to test the deployment of the app locally. | feature/msp_devops_10 |
-| Local Development Environment | Prepare a Script for Packaging the Application | MSP-4 |  Prepare a script to push the images to registry  | feature/msp_4 |
-| CI Server Setup | Configure Jenkins Server for Project | MSP-10  | Configure Jenkins Server for Project Setup. | 
-| Testing Environment Setup | Implement Unit Tests | MSP-11  | Implement 1 Unit Tests locally. | feature/msp-11 |
+| Local Development Build | Create Docker Compose File for Local Development | MSP-10 |  Prepare a script to test the deployment of the app locally. | feature/msp_devops_10 |
+| Local Development Environment | Prepare dockerhub registry | MSP-11 |  Prepare dockerhub registry |
+| Local Development Environment | Prepare images  | MSP-12 |  write a script to tag images for the registry for dev environment | feature/msp_devops_12|
+| Local Development Environment | Prepare image push script | MSP-13 |  write a script to push images | feature/msp_devops_13|
+| CI Server Setup | Configure Jenkins Server for Project | MSP-13  | install necessary plugins on  Jenkins  for Project Setup. | 
+| Testing Environment Setup | Implement Unit Tests | MSP-14  | Implement  Unit Tests for all the services. | feature/msp_devops_14 |
+| Testing Environment Setup | report code coverage | MSP-15  | write a script to make a coverage report | feature/msp_devops_15 |
+
+
 | Testing Environment Setup | Implement Code Coverage | MSP-12  | Generate Code Coverage Report manually. | feature/msp-12 |
 | Registry Setup for Development | Create Docker Registry for Dev Manually | MSP-14  | Create Docker Registry on Dockerhub  manually . | feature/msp-14 |
 | CI Server Setup | Prepare CI Pipeline | MSP-13 | Prepare CI pipeline  for all `dev` , `feature` and `bugfix` branches. | feature/msp-13 |
