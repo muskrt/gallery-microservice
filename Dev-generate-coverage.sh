@@ -1,5 +1,5 @@
 #!/bin/bash
-services=`ls  | grep service`
+services=`ls  | grep '_service'`
 for service in $services 
 do 
     cd $service 
