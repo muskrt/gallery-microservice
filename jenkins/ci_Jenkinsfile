@@ -1,0 +1,22 @@
+pipeline {
+    agent any
+    tools {
+        go '1.22'
+    }
+
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building..'
+                sh Dev-build-packages.sh
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Testing..'
+                sh Dev-generate-coverage.sh
+            }
+        }
+        }
+    }
+}
