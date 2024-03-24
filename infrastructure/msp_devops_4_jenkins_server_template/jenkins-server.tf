@@ -6,7 +6,7 @@
 
 provider "aws" {
   region = var.region
- 
+
   //  If you have entered your credentials in AWS CLI before, you do not need to use these arguments.
 }
 
