@@ -1,3 +1,5 @@
+#!/bin/bash 
+cd ../
 echo "building packages"
 sh Dev-build-packages.sh
 echo "generating coverage"
