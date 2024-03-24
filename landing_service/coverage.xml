@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
-<coverage line-rate="0.26086956" branch-rate="0" version="" timestamp="1711291965791" lines-covered="12" lines-valid="46" branches-covered="0" branches-valid="0" complexity="0">
+<coverage line-rate="0.26086956" branch-rate="0" version="" timestamp="1711293167340" lines-covered="12" lines-valid="46" branches-covered="0" branches-valid="0" complexity="0">
   <sources>
     <source>/home/mustafa/Desktop/programming_projects/golang/gallery-microservice/landing_service</source>
   </sources>
