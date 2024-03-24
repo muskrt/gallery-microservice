@@ -4,6 +4,6 @@ for service in $services
 do 
     cd $service 
     go test -coverprofile=coverage.txt
-    gocover-cobertura < coverage.txt > coverage.xml
+    /home/ec2-user/go/bin/gocover-cobertura < coverage.txt > coverage.xml
     cd ../
 done 
