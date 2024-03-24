@@ -4,6 +4,7 @@ for service in $services
 do 
     cd $service 
     go test -coverprofile=coverage.txt
-    /home/ec2-user/go/bin/gocover-cobertura < coverage.txt > coverage.xml
+    docker 
+    docker run --rm -v `pwd`:/app -w /app keemyb/gocover-cobertura gocover-cobertura < coverage.txt > coverage.xml
     cd ../
 done 
