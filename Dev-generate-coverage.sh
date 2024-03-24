@@ -1,3 +1,4 @@
+#!/bin/bash
 services=`ls  | grep service`
 for service in $services 
 do 
