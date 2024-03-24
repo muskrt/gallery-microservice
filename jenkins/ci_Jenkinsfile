@@ -1,22 +1,29 @@
-pipeline {
+pipeline 
+{
     agent any
-    tools {
+    tools 
+    {
         go '1.22'
     }
 
-    stages {
-        stage('Build') {
-            steps {
+    stages 
+    {
+        stage('Build')
+        {
+            steps
+            {
                 echo 'Building..'
                 sh Dev-build-packages.sh
             }
         }
-        stage('Test') {
-            steps {
+        stage('Test')
+        {
+            steps 
+            {
                 echo 'Testing..'
                 sh Dev-generate-coverage.sh
             }
-        }
+        
         }
     }
 }
