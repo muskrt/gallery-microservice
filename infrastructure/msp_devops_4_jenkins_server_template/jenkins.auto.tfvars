@@ -1,0 +1,10 @@
+mykey = "linux"
+//ami = "ami-0947d2ba12ee1ff75"
+
+ami = "ami-080e1f13689e07408"
+region = "us-east-1"
+instance_type = "t3a.medium"
+jenkins_server_secgr = "gallery-jenkins-server-secgr"
+jenkins-server-tag = "Jenkins Server of gallery"
+jenkins-profile = "gallery-jenkins-server-profile"
+jenkins-role = "gallery-jenkins-server-role"
