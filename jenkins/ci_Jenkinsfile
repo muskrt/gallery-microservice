@@ -1,6 +1,9 @@
 pipeline 
 {
     agent any
+    environment {
+        PATH=$PATH:/home/ec2-user/go/bin
+    }
     tools 
     {
         go '1.22'
