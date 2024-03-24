@@ -1,0 +1,10 @@
+mode: set
+login_service/main.go:10.40,14.10 4 1
+login_service/main.go:14.10,16.3 1 0
+login_service/main.go:17.2,20.47 3 1
+login_service/main.go:20.47,22.3 1 1
+login_service/main.go:23.2,23.10 1 1
+login_service/main.go:23.10,25.3 1 1
+login_service/main.go:25.8,27.3 1 1
+login_service/main.go:30.30,36.2 4 1
+login_service/main.go:37.13,43.2 2 0

@@ -23,17 +23,20 @@ func loginController(ctx *gin.Context) {
 	if auth {
 		ctx.JSON(http.StatusOK, gin.H{"message": "success"})
 	} else {
-		ctx.JSON(http.StatusOK, gin.H{"message": "error"})
+		ctx.JSON(http.StatusBadRequest, gin.H{"message": "error"})
 	}
 }
 
-func main() {
-
+func newServer() *gin.Engine {
 	server := gin.New()
 
 	fmt.Println("server started at 30300")
-
 	server.GET("/check/:username/:password", loginController)
+	return server
+}
+func main() {
+
+	server := newServer()
 
 	server.Run(":30300")
 

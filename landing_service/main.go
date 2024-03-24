@@ -47,13 +47,18 @@ func loginPostController(ctx *gin.Context) {
 
 }
 
-func main() {
-
+func newServer() *gin.Engine {
 	server := gin.New()
-
 	server.LoadHTMLGlob("templates/*.html")
 	server.GET("/login", loginGetController)
 	server.POST("/login", loginPostController)
+	return server
+
+}
+
+func main() {
+
+	server := newServer()
 
 	fmt.Println("landing service starting on 8080")
 
