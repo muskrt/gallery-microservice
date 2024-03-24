@@ -7,4 +7,3 @@
 *.pub
 crash.log
 crash.*.log
-go.sum
