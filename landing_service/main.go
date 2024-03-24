@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 )
@@ -23,7 +24,11 @@ func loginPostController(ctx *gin.Context) {
 	username := ctx.PostForm("username")
 	password := ctx.PostForm("password")
 	fmt.Println("username is -------" + username)
-	resp, _ := http.Get("login_service/check/" + username + "/" + password)
+	url := strings.TrimSpace("http://login_service:30300/check/" + username + "/" + password)
+	resp, err := http.Get(url)
+	if err != nil {
+		fmt.Println(err)
+	}
 	res := &loginResponse{}
 	defer resp.Body.Close()
 	body, err := io.ReadAll(resp.Body)
@@ -36,8 +41,9 @@ func loginPostController(ctx *gin.Context) {
 	}
 	if res.Message == "success" {
 		ctx.HTML(http.StatusOK, "success.html", nil)
+	} else if res.Message == "error" {
+		ctx.HTML(http.StatusOK, "error.html", nil)
 	}
-	ctx.HTML(http.StatusOK, "error.html", nil)
 
 }
 

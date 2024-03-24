@@ -1,0 +1,13 @@
+version: '3.8'
+services:
+  landing_service:
+    image: landing_service:dev
+    container_name: landing_service
+    ports:
+      - "8080:8080"
+  login_service:
+    image: login_service:dev
+    container_name: login_service
+    ports:
+      - "30300:30300"
+

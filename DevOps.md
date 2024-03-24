@@ -13,7 +13,7 @@ This project aims to create full CI/CD Pipeline for microservice based applicati
 | Local Development Environment | Prepare GitHub Repository for the Project | MSP-1 | Clone the gallery app from the  repository [Gallery Microservices Application](https://github.com/muskrt/gallery-microservice.git) |
 | Local Development Environment | Prepare GitHub Repository for the Project | MSP-2 | Prepare base branches namely `main` , `dev` , `release` for DevOps cycle. |
 | Local Development Environment | Prepare Development Server Terraform Files | MSP-3 |  Prepare development server folder with Terraform File for developers, enabled with `Docker` , `Docker-Compose` , `Git` `golang v1.0.22`. | feature/msp_devops_3 |
-| CI Server Setup | Prepare Jenkins Server | MSP-4 | Prepare Jenkins Server for CI/CD Pipeline. | feature/msp_devops_4 |
+| CI Server Setup | Install Jenkins Server | MSP-4 | Install Jenkins Server for CI/CD Pipeline. | feature/msp_devops_4 |
 | Local Development Environment | Check the Golang Build Setup on Dev Branch | MSP-5 | Check the Golang builds for `test` , `package` , and `install` phases on `dev` branch |
 | Local Development Environment | Prepare a Script for Building  Packaging the Application | MSP-6 |  Prepare a script to build and package the application with Golang  | feature/msp_devops_6 |
 | Local Development Build | Prepare Dockerfiles for Microservices | MSP-7 | Prepare Dockerfiles for each microservices. | feature/msp_devops_7 |
