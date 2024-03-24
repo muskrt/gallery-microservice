@@ -2,7 +2,7 @@ pipeline
 {
     agent any
     environment {
-        PATH="$PATH:/home/ec2-user/go/bin"
+        PATH="$PATH:/home/ec2-user/go/bin:/usr/local/go/bin"
     }
     tools 
     {
