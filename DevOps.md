@@ -26,12 +26,12 @@ This project aims to create full CI/CD Pipeline for microservice based applicati
 | CI Server Setup | Configure Jenkins Server for Project | MSP-13  | install necessary plugins on  Jenkins  for Project Setup. | 
 | Testing Environment Setup | Implement Unit Tests | MSP-14  | Implement  Unit Tests for all the services. | feature/msp_devops_14 |
 | Testing Environment Setup | report code coverage | MSP-15  | write a script to make a coverage report | feature/msp_devops_15 |
-| CI Pipeline Script | prepare CI Script | MSP-16  | write a jenkinsfile to run CI pipeline| feature/msp_devops_16 |
+| CI Pipeline Script | prepare CI Script | MSP-16  | Implement CI pipeline| feature/msp_devops_16 |
 
 
 | Testing Environment Setup | Implement Code Coverage | MSP-12  | Generate Code Coverage Report manually. | feature/msp-12 |
 | Registry Setup for Development | Create Docker Registry for Dev Manually | MSP-14  | Create Docker Registry on Dockerhub  manually . | feature/msp-14 |
-| CI Server Setup | Prepare CI Pipeline | MSP-13 | Prepare CI pipeline  for all `dev` , `feature` and `bugfix` branches. | feature/msp-13 |
+| CI Server Setup | Implement CI Pipeline | MSP-13 | Implement CI pipeline  for all `dev` , `feature` and `bugfix` branches. | feature/msp-13 |
 
 
 
