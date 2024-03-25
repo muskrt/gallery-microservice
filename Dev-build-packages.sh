@@ -1,12 +1,7 @@
 #!/bin/bash
 echo "Running build script "
 echo $PWD
-export GOPROXY=direct
 cd landing_service 
-go clean --modcache
-go get -u
+docker run --rm -v `pwd`:/app -w /app golang:1.22-alpine go mod download && go get -u && go build .
 cd ../login_service
-go clean --modcache
-go get -u && cd ../
-go build -C ./landing_service
-go build -C ./login_service
+docker run --rm -v `pwd`:/app -w /app golang:1.22-alpine go mod download && go get -u && go build .
