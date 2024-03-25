@@ -6,7 +6,6 @@
 
 provider "aws" {
   region = var.region
- 
   //  If you have entered your credentials in AWS CLI before, you do not need to use these arguments.
 }
 
@@ -25,7 +24,7 @@ resource "aws_instance" "tf-jenkins-server" {
     Name = var.jenkins-server-tag
     server = "Jenkins"
   }
-  user_data = file("jenkinsdata.sh")
+  user_data = file("jenkinsubuntu.sh")
 }
 
 resource "aws_security_group" "tf-jenkins-sec-gr" {
