@@ -20,5 +20,23 @@ pipeline
             }
         
         }
+        stage('Building Docker Images')
+        {
+            steps 
+            {
+                echo 'Image Building..'
+                sh 'Dev-build-docker-images.sh'
+            }
+        
+        }
+        stage('Pushing Images To Registry')
+        {
+            steps 
+            {
+                echo 'Pushing Images..'
+                sh 'Dev-push-images-to-registry.sh'
+            }
+        
+        }
     }
 }

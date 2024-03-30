@@ -5,13 +5,12 @@ This project aims to create a microservice based application using Golang v1.0.2
 
 
 ## Flow of Tasks for Project Realization
-
 | Epic | Task  | Task #  | Task Definition   | Branch  |
 | ---   | :---  | ---                  | :---              | :---    |
 | Landing-service Development  | write a service using REST  | MSP_DEV_1 | Use the script to build and test the application localy  | feature/msp_dev_1 |
 | Login-service Development  | write a service using REST  | MSP-DEV-2 | Use the script to build and test the application localy Golang  | feature/msp_dev_2 |
-
-
+| apiGW-service Development  | write a service using REST  | MSP-DEV-3 | Use the script to build and test the application localy Golang  | feature/msp_dev_3 |
+| notes-service Development  | write a service using REST  | MSP-DEV-4 | Use the script to build and test the application localy Golang  | feature/msp_dev_4 |
 
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -24,7 +23,7 @@ This project aims to create a microservice based application using Golang v1.0.2
 ``` bash
 exposed methods = GET,POST
 serialization method = JSON
-exposed port = 30300
+exposed port = 30100
 ```
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -37,6 +36,32 @@ exposed port = 30300
 exposed methods = GET,POST
 serialization method = JSON
 exposed port = 8080
+```
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+## MSP_DEV_3 - apiGW-service Development
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+* Write a service using gin framework and Rest methods to reach all services end to meet requirements of landing_service api calls 
+
+``` bash
+exposed methods = GET,POST
+serialization method = JSON
+exposed port = 30200
+```
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+## MSP_DEV_4 - notes-service Development
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+* Write a service using gin framework and Rest methods to return the list of notes belongs to user 
+
+``` bash
+exposed methods = GET,POST
+serialization method = JSON
+exposed port = 30300
+request input = input 
+request output = user notes data
 ```
 
 
