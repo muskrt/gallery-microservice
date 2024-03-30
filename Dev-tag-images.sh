@@ -8,10 +8,3 @@ do
     echo $image
     [  -z "$(docker images -q ${image})" ] || docker  image rm $image 
 done 
-echo "tagging images"
-for service in $services 
-do 
- 
-    docker tag $service":dev" $repo:$service"_dev"
-
-done 
