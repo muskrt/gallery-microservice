@@ -52,6 +52,6 @@ sudo apt-get update -y && sudo apt-get install gnupg software-properties-common 
 echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] \
 https://apt.releases.hashicorp.com $(lsb_release -cs) main" | \
 sudo tee /etc/apt/sources.list.d/hashicorp.list
-apt-get install terraform -y
+apt-get update -y
 sudo apt-get install terraform -y
 
