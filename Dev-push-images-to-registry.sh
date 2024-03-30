@@ -1,8 +1,6 @@
 repo=scottkurt/gallery
 images=`docker image ls | grep -i scottkurt/gallery | awk '{print $2}'`
-USERNAME=$1
-PASSWORD=$2
-docker login docker.io -u $USERNAME -p $PASSWORD
+docker login docker.io -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}
 echo "pushing   images to registry"
 for image in $images 
 do 
