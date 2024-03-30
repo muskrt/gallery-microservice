@@ -9,5 +9,10 @@ services:
     image: login_service:dev
     container_name: login_service
     ports:
-      - "30300:30300"
+      - "30100:30100"
+  apiGW_service:
+    image: apiGW_service:dev
+    container_name: apiGW_service
+    ports:
+      - "30200:30200"
 
