@@ -30,7 +30,7 @@ func loginController(ctx *gin.Context) {
 func newServer() *gin.Engine {
 	server := gin.New()
 
-	fmt.Println("server started at 30300")
+	fmt.Println("server started at 30100")
 	server.GET("/check/:username/:password", loginController)
 	return server
 }
@@ -38,6 +38,6 @@ func main() {
 
 	server := newServer()
 
-	server.Run(":30300")
+	server.Run(":30100")
 
 }

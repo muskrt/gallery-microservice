@@ -1,7 +1,6 @@
 FROM golang:1.22-alpine
-WORKDIR /landing_service
-COPY go.mod go.sum ./
-RUN go mod download && go mod verify
+WORKDIR /app
+COPY . ./
 COPY *.go ./
 COPY templates/* ./templates/
 EXPOSE 8080

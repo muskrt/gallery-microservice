@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose.yaml -o gallery_chart/templates/
+    kompose.image-pull-secret: regcred
+    kompose.version: 1.32.0 (765fde254)
+  labels:
+    io.kompose.service: login-service
+  name: login-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: login-service
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f docker-compose.yaml -o gallery_chart/templates/
+        kompose.image-pull-secret: regcred
+        kompose.version: 1.32.0 (765fde254)
+      labels:
+        io.kompose.network/k8-default: "true"
+        io.kompose.service: login-service
+    spec:
+      containers:
+        - image: '{{ .Values.IMAGE_TAG_LOGIN_SERVICE }}'
+          name: login-service
+          ports:
+            - containerPort: 30100
+              hostPort: 30100
+              protocol: TCP
+      imagePullSecrets:
+        - name: regcred
+      restartPolicy: Always

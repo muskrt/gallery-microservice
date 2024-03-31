@@ -1,18 +1,22 @@
-version: '3.8'
+version: "3"
 services:
   landing_service:
-    image: landing_service:dev
+    image: scottkurt/gallery:landing_service_dev_
     container_name: landing_service
+    environment:
+      - API_SERVER=apigw_service
     ports:
       - "8080:8080"
   login_service:
-    image: login_service:dev
+    image: scottkurt/gallery:login_service_dev_
     container_name: login_service
     ports:
       - "30100:30100"
-  apiGW_service:
-    image: apiGW_service:dev
-    container_name: apiGW_service
+  apigw_service:
+    image: scottkurt/gallery:apigw_service_dev_
+    container_name: apigw_service
+    environment:
+      - LOGIN_SERVER=login_service
     ports:
       - "30200:30200"
 

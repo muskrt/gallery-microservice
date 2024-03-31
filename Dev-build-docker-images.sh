@@ -11,6 +11,7 @@ do
 done 
 for service in $services 
 do 
+echo "docker build --force-rm -t "${repo}:${service}_dev_${BUILD_NUMBER}" ./${service}"
 docker build --force-rm -t "${repo}:${service}_dev_${BUILD_NUMBER}" ./${service}
 done
 
