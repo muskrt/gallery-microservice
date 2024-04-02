@@ -40,7 +40,12 @@ pipeline
         }
         stage('Extracting Test Results...')
         {
-              cobertura coberturaReportFile: '*/coverage.xml'
+            steps
+            {
+                echo "publishing unit test report..."
+                cobertura coberturaReportFile: '*/coverage.xml'
+            }
+              
         }
     }
 }
