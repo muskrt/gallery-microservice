@@ -8,7 +8,7 @@ pipeline
             steps
             {
                 echo 'Building..'
-                sh ../Dev-build-packages.sh
+                sh '../Dev-build-packages.sh'
             }
         }
         stage('Test')
@@ -16,7 +16,7 @@ pipeline
             steps 
             {
                 echo 'Testing..'
-                sh ../Dev-generate-coverage.sh
+                sh '../Dev-generate-coverage.sh'
             }
         
         }
@@ -25,7 +25,7 @@ pipeline
             steps 
             {
                 echo 'Image Building..'
-                sh 'Dev-build-docker-images.sh'
+                sh '../Dev-build-docker-images.sh'
             }
         
         }
@@ -34,7 +34,7 @@ pipeline
             steps 
             {
                 echo 'Pushing Images..'
-                sh 'Dev-push-images-to-registry.sh'
+                sh '../Dev-push-images-to-registry.sh'
             }
         
         }
