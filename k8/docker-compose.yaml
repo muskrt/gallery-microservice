@@ -1,33 +1,31 @@
-version: '3'
+version: "3"
 services:
-  landing_service:
+  landing-service:
     image: "{{ .Values.IMAGE_TAG_LANDING_SERVICE }}"
-    container_name: landing_service
+    container_name: landing-service
+    environment:
+      - API_SERVER=apigw-service
     ports:
       - "8080:8080"
-    labels:
-      kompose.image-pull-secret: "regcred"
-  login_service:
-    image: "{{ .Values.IMAGE_TAG_LOGIN_SERVICE }}"
-    container_name: login_service
+
+  login-service:
+    image: "{{ .Values.IMAGE_TAG_LANDING_SERVICE }}"
+    container_name: login-service
     ports:
       - "30100:30100"
-    labels:
-      kompose.image-pull-secret: "regcred"
-  apiGW_service:
-    image: "{{ .Values.IMAGE_TAG_APIGW_SERVICE }}"
-    container_name: apiGW_service
+  apigw-service:
+    image: "{{ .Values.IMAGE_TAG_LANDING_SERVICE }}"
+    container_name: apigw-service
+    environment:
+      - LOGIN_SERVER=login-service
+      - NOTES_SERVER=notes-service
     ports:
       - "30200:30200"
-    labels:
-      kompose.image-pull-secret: "regcred"
-
-  notes_service:
-    image: "{{ .Values.IMAGE_TAG_NOTES_SERVICE }}"
-    container_name: apiGW_service
+  notes-service:
+    image: "{{ .Values.IMAGE_TAG_LANDING_SERVICE }}"
+    container_name: notes-service
     ports:
       - "30300:30300"
-    labels:
-      kompose.image-pull-secret: "regcred"
+
 
 

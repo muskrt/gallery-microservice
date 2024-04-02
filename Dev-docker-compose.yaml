@@ -1,22 +1,44 @@
 version: "3"
 services:
-  landing_service:
+  landing-service:
     image: scottkurt/gallery:landing_service_dev_
-    container_name: landing_service
+    container_name: landing-service
     environment:
-      - API_SERVER=apigw_service
+      - API_SERVER=apigw-service
     ports:
       - "8080:8080"
-  login_service:
+    volumes:
+      - type: bind
+        source: ./landing_service/
+        target: /app
+  login-service:
     image: scottkurt/gallery:login_service_dev_
-    container_name: login_service
+    container_name: login-service
     ports:
       - "30100:30100"
-  apigw_service:
+    volumes:
+      - type: bind
+        source: ./login-service
+        target: /app
+  apigw-service:
     image: scottkurt/gallery:apigw_service_dev_
-    container_name: apigw_service
+    container_name: apigw-service
     environment:
-      - LOGIN_SERVER=login_service
+      - LOGIN_SERVER=login-service
+      - NOTES_SERVER=notes-service
     ports:
       - "30200:30200"
+    volumes:
+      - type: bind
+        source: ./apigw-service
+        target: /app
+  notes-service:
+    image: scottkurt/gallery:notes_service_dev_
+    container_name: notes-service
+    ports:
+      - "30300:30300"
+    volumes:
+      - type: bind
+        source: ./notes_service
+        target: /app
 

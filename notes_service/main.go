@@ -3,55 +3,37 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"io"
 	"net/http"
-	"strings"
 
 	"github.com/gin-gonic/gin"
 )
 
-func loginGetController(ctx *gin.Context) {
-
-	ctx.HTML(http.StatusOK, "login.html", nil)
+type userNotes struct {
+	Note string `json:"note"`
+	Todo string `json:"todo"`
+	Date string `json:"date"`
 }
 
-type loginResponse struct {
-	Message string `json:"message"`
-}
+func notesGetController(ctx *gin.Context) {
+	username, _ := ctx.Params.Get("username")
 
-func loginPostController(ctx *gin.Context) {
-
-	username := ctx.PostForm("username")
-	password := ctx.PostForm("password")
-	fmt.Println("username is -------" + username)
-	url := strings.TrimSpace("http://login_service:30300/check/" + username + "/" + password)
-	resp, err := http.Get(url)
-	if err != nil {
-		fmt.Println(err)
-	}
-	res := &loginResponse{}
-	defer resp.Body.Close()
-	body, err := io.ReadAll(resp.Body)
-	if err != nil {
-		fmt.Println(err)
-	}
-	err = json.Unmarshal(body, &res)
-	if err != nil {
-		fmt.Println(err)
-	}
-	if res.Message == "success" {
-		ctx.HTML(http.StatusOK, "success.html", nil)
-	} else if res.Message == "error" {
-		ctx.HTML(http.StatusOK, "error.html", nil)
-	}
+	data := []userNotes{
+		userNotes{
+			Note: string(username + "test"), Todo: "yes", Date: "today"},
+		userNotes{
+			Note: string(username + "quiz"), Todo: "yes", Date: "tomorrow"}}
+	usernotes, _ := json.Marshal(data)
+	ctx.JSON(http.StatusOK, gin.H{
+		"code":    http.StatusOK,
+		"message": string(usernotes), // cast it to string before showing
+	})
 
 }
 
 func newServer() *gin.Engine {
 	server := gin.New()
-	server.LoadHTMLGlob("templates/*.html")
-	server.GET("/login", loginGetController)
-	server.POST("/login", loginPostController)
+	server.GET("/notes/:username", notesGetController)
+
 	return server
 
 }
@@ -60,8 +42,8 @@ func main() {
 
 	server := newServer()
 
-	fmt.Println("landing service starting on 8080")
+	fmt.Println("landing service starting on 30300")
 
-	server.Run(":8080")
+	server.Run(":30300")
 
 }

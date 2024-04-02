@@ -1,2 +1,82 @@
-<h1>You Logged In Gallery Application</h1>
-<button> My Notes </button>
+<!DOCTYPE html>
+<html>
+    <title>Gallery App</title>
+<head>
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>
+</head>
+<body style="background-color: gray;">
+    <h1 style="margin-left: 40%;">You Logged In Gallery Application</h1>
+    <button type="submit" style="border-radius: 5px; font-size: 20px;" onclick="mynotes()"> My Notes </button>
+    <a href="/login"><button type="submit" style="border-radius: 5px; font-size: 20px; float:right;">Logout </button></a>
+<br>
+<br>
+
+<table id="notes">
+<tr>
+  <th>Notes</th>
+  <th>Todo</th>
+  <th>Date</th>
+</tr>
+
+
+
+</table>
+<h1 style="visibility: hidden;" id="username">{{ .username }}</h1>
+<script>
+function mynotes() {
+    var username =document.getElementById("username");
+
+        fetch("/notes/"+username.innerHTML)
+	  .then((response) => response.json()) //parse json data
+    .then(function (data){
+     var arr =JSON.parse(data["message"]);
+     console.log(arr.length)
+     console.log(data)
+     var table = document.getElementById("notes");
+     table.innerHTML=""; 
+     insRow("NOTES","TODOS","DATE");
+     for (var i = 0; i < arr.length; i++){
+        var obj = arr[i];
+        insRow(obj['note'],obj['todo'],obj['date'])
+       
+      }
+    }
+        
+    )
+    }
+function insRow(note,todo,date)
+{
+        var table = document.getElementById("notes");
+        var rowCount = table.rows.length;
+        var row = table.insertRow(rowCount);
+
+        var cell0 = row.insertCell(0);
+        cell0.innerHTML = note
+
+        var cell0 = row.insertCell(1);
+        cell0.innerHTML = todo
+
+        var cell0 = row.insertCell(2);
+        cell0.innerHTML = date
+}
+  </script>
+</body>
+
+
+</html>

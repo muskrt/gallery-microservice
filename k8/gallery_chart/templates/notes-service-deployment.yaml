@@ -3,7 +3,6 @@ kind: Deployment
 metadata:
   annotations:
     kompose.cmd: kompose convert -f docker-compose.yaml -o gallery_chart/templates/
-    kompose.image-pull-secret: regcred
     kompose.version: 1.32.0 (765fde254)
   labels:
     io.kompose.service: notes-service
@@ -17,19 +16,16 @@ spec:
     metadata:
       annotations:
         kompose.cmd: kompose convert -f docker-compose.yaml -o gallery_chart/templates/
-        kompose.image-pull-secret: regcred
         kompose.version: 1.32.0 (765fde254)
       labels:
         io.kompose.network/k8-default: "true"
         io.kompose.service: notes-service
     spec:
       containers:
-        - image: '{{ .Values.IMAGE_TAG_NOTES_SERVICE }}'
-          name: apigw-service
+        - image: '{{ .Values.IMAGE_TAG_LANDING_SERVICE }}'
+          name: notes-service
           ports:
             - containerPort: 30300
               hostPort: 30300
               protocol: TCP
-      imagePullSecrets:
-        - name: regcred
       restartPolicy: Always

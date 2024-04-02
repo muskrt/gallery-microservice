@@ -20,6 +20,9 @@ func loginController(ctx *gin.Context) {
 	if username == "admin" && password == "toor" {
 		auth = true
 	}
+	if username == "mustafa" && password == "test" {
+		auth = true
+	}
 	if auth {
 		ctx.JSON(http.StatusOK, gin.H{"message": "success"})
 	} else {

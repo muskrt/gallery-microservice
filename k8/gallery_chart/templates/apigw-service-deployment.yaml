@@ -3,7 +3,6 @@ kind: Deployment
 metadata:
   annotations:
     kompose.cmd: kompose convert -f docker-compose.yaml -o gallery_chart/templates/
-    kompose.image-pull-secret: regcred
     kompose.version: 1.32.0 (765fde254)
   labels:
     io.kompose.service: apigw-service
@@ -17,19 +16,21 @@ spec:
     metadata:
       annotations:
         kompose.cmd: kompose convert -f docker-compose.yaml -o gallery_chart/templates/
-        kompose.image-pull-secret: regcred
         kompose.version: 1.32.0 (765fde254)
       labels:
         io.kompose.network/k8-default: "true"
         io.kompose.service: apigw-service
     spec:
       containers:
-        - image: '{{ .Values.IMAGE_TAG_APIGW_SERVICE }}'
+        - env:
+            - name: LOGIN_SERVER
+              value: login-service
+            - name: NOTES_SERVER
+              value: notes-service
+          image: '{{ .Values.IMAGE_TAG_LANDING_SERVICE }}'
           name: apigw-service
           ports:
             - containerPort: 30200
               hostPort: 30200
               protocol: TCP
-      imagePullSecrets:
-        - name: regcred
       restartPolicy: Always
