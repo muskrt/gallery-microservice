@@ -7,7 +7,7 @@ pipeline
         {
             steps
             {
-                echo 'Building..'
+                echo 'Building...'
                 sh './Dev-build-packages.sh'
             }
         }
@@ -15,7 +15,7 @@ pipeline
         {
             steps 
             {
-                echo 'Testing..'
+                echo 'Testing...'
                 sh './Dev-generate-coverage.sh'
             }
         
@@ -24,7 +24,7 @@ pipeline
         {
             steps 
             {
-                echo 'Image Building..'
+                echo 'Image Building...'
                 sh './Dev-build-docker-images.sh'
             }
         
