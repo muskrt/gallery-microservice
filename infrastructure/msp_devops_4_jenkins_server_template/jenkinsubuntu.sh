@@ -7,10 +7,12 @@ sudo wget -O /usr/share/keyrings/jenkins-keyring.asc \
 echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
   https://pkg.jenkins.io/debian-stable binary/ | sudo tee \
   /etc/apt/sources.list.d/jenkins.list > /dev/null
-sudo apt-get update -y
-sudo apt-get install jenkins -y
+apt update -qy
+sudo apt-get install gnupg software-properties-common -y
+apt-get install unzip -y
+sudo apt-get install jenkins -qy
 sudo apt update -y
-sudo apt install fontconfig openjdk-17-jre -y
+sudo apt-get install fontconfig openjdk-17-jre -qy
 sudo systemctl enable jenkins
 wget -c https://go.dev/dl/go1.22.0.linux-amd64.tar.gz
 tar -C /usr/local/ -xzf go1.22.0.linux-amd64.tar.gz
@@ -21,17 +23,16 @@ systemctl enable jenkins
 for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc; do sudo apt-get remove $pkg; done
 sudo apt-get update -y
 sudo apt-get install ca-certificates curl -y
-sudo install -m 0755 -d /etc/apt/keyrings
 sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
 sudo chmod a+r /etc/apt/keyrings/docker.asc
-
+sudo install -m 0755 -d /etc/apt/keyrings
 # Add the repository to Apt sources:
 echo \
   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
   $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
   sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-sudo apt-get update -y
-sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin  -y
+apt update -y
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin  -qy
 curl -L "https://github.com/docker/compose/releases/download/1.26.2/docker-compose-$(uname -s)-$(uname -m)" \
 -o /usr/local/bin/docker-compose
 chmod +x /usr/local/bin/docker-compose
@@ -44,14 +45,18 @@ apt install python3 -y
 usermod -a -G docker ubuntu
 usermod -a -G docker jenkins
 # install ansible
+apt-get install python3-pip -y
 pip3 install ansible
 # install boto3
 pip3 install boto3
 # install terraform
-sudo apt-get update -y && sudo apt-get install gnupg software-properties-common -y
+sudo apt-get update -y 
+wget -O- https://apt.releases.hashicorp.com/gpg | \
+gpg --dearmor | \
+sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg > /dev/null
 echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] \
 https://apt.releases.hashicorp.com $(lsb_release -cs) main" | \
 sudo tee /etc/apt/sources.list.d/hashicorp.list
 apt-get update -y
-sudo apt-get install terraform -y
+sudo apt-get install terraform -qy
 

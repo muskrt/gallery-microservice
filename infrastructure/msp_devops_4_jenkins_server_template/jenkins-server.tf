@@ -16,7 +16,7 @@ resource "aws_instance" "tf-jenkins-server" {
   vpc_security_group_ids = [aws_security_group.tf-jenkins-sec-gr.id]
   iam_instance_profile = aws_iam_instance_profile.tf-jenkins-server-profile.name
   ebs_block_device {
-    device_name = "/dev/xvda"
+    device_name = "/dev/sda1"
     volume_type = "gp2"
     volume_size = 16
   }
