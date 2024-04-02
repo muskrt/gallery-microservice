@@ -8,7 +8,7 @@ pipeline
             steps
             {
                 echo 'Building..'
-                sh 'Dev-build-packages.sh'
+                sh ../Dev-build-packages.sh
             }
         }
         stage('Test')
@@ -16,7 +16,7 @@ pipeline
             steps 
             {
                 echo 'Testing..'
-                sh 'Dev-generate-coverage.sh'
+                sh ../Dev-generate-coverage.sh
             }
         
         }
