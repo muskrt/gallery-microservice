@@ -32,6 +32,7 @@
       - curl
       - ca-certificates
       - gpg
+      - apt-transport-https ca-certificates
 
   - name: update apt-get and install kube packages
     shell: |
