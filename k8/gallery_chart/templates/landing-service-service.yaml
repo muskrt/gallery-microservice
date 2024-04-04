@@ -3,6 +3,7 @@ kind: Service
 metadata:
   annotations:
     kompose.cmd: kompose convert -f docker-compose.yaml -o gallery_chart/templates/
+    kompose.service.type: nodeport
     kompose.version: 1.32.0 (765fde254)
   labels:
     io.kompose.service: landing-service
@@ -14,3 +15,4 @@ spec:
       targetPort: 8080
   selector:
     io.kompose.service: landing-service
+  type: NodePort

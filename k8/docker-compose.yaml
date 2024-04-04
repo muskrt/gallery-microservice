@@ -7,6 +7,9 @@ services:
       - API_SERVER=apigw-service
     ports:
       - "8080:8080"
+    labels:
+      kompose.service.type: nodeport
+      kompose.service.nodeport.port: "30500"
 
   login-service:
     image: "{{ .Values.IMAGE_TAG_LANDING_SERVICE }}"
