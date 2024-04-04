@@ -32,6 +32,7 @@ This project aims to create full CI/CD Pipeline for microservice based applicati
 | Nightly Build  | Registry Push Script | MSP-19  | Write a Script to Push images to registry under nigthly folder | feature/msp_devops_19 |
 | Nightly Build  | Prepare helm package with HPA  | MSP-20  | prepare helm package with kompose under nigthly/k8 folder| feature/msp_devops_20 |
 | Nightly Build  | Prepare k8 set up files | MSP-21  | prepare k8 set up files with terraform and ansible | feature/msp_devops_21 |
+| Nightly Build  | prepare helm repo in s3(aws) | MSP-22  | write a script to create helm repo | feature/msp_devops_22 |
 
 
 
