@@ -10,8 +10,8 @@ do
     echo $image
     [  -z "$(docker images -q ${image})" ] || docker  image rm $image 
 done 
-services=`ls  | grep '_service' | tr '_' '-'`
+services=`ls  | grep '_service'`
 for service in $services 
 do 
-docker build --force-rm -t "${repo}:${service}_${build_env}_${BUILD_NUMBER}" ./${service}
+docker build --force-rm -t "${repo}:`echo ${service} | tr '_' '-'`_${build_env}_${BUILD_NUMBER}" ./${service}
 done 

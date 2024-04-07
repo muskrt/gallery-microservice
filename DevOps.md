@@ -33,6 +33,7 @@ This project aims to create full CI/CD Pipeline for microservice based applicati
 | Nightly Build  | Prepare helm package with HPA  | MSP-20  | prepare helm package with kompose under nigthly/k8 folder| feature/msp_devops_20 |
 | Nightly Build  | Prepare k8 set up files | MSP-21  | prepare k8 set up files with terraform and ansible | feature/msp_devops_21 |
 | Nightly Build  | prepare helm repo in s3(aws) | MSP-22  | write a script to create helm repo | feature/msp_devops_22 |
+| Nightly Build  | create ansible playbook | MSP-23  | prepate deployment playbook | feature/msp_devops_23 |
 
 
 
