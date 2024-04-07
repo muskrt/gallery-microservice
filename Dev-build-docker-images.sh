@@ -1,7 +1,7 @@
 echo "Running Image Build Script"
 repo=scottkurt/gallery
 images=`docker image ls | grep -i scottkurt/gallery | awk '{print $2}'`
-services=`ls  | grep '_service'`
+services=`ls  | grep '_service' | tr '_' '-'`
 echo "removing old images"
 for image in $images 
 do 

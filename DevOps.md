@@ -37,6 +37,24 @@ This project aims to create full CI/CD Pipeline for microservice based applicati
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 | Nightly Build  | Prepare helm package  | MSP-20  | prepare helm package with kompose under nigthly/k8 folder| feature/msp_devops_20 |
 | Nightly Build  | Prepare helm repo | MSP-21  | Create a script to prepare  helm repo with ecr(aws) under nightly folder| feature/msp_devops_21 |
 
@@ -64,28 +82,6 @@ This project aims to create full CI/CD Pipeline for microservice based applicati
 | Production Deployment Setup | Prepare a Production Pipeline | MSP-28  | Prepare a Production Pipeline on Jenkins Server | feature/msp-28|
 | Production Deployment Setup | Set Domain Name and TLS for Production | MSP-29  | Set Domain Name and TLS for Production Pipeline with Route 53 | feature/msp-29|
 | Production Deployment Setup | Set Monitoring Tools | MSP-30  | Set Monitoring tools, Prometheus and Grafana | |
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
