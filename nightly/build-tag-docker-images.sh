@@ -1,8 +1,7 @@
 echo "Running Image Build Script For Nightly Build"
 build_env=nightly
 repo=scottkurt/gallery
-images=`docker image ls | grep -i scottkurt/gallery | awk '{print $2}'`
-services=`docker image ls | awk '{print $1}' | grep _service `
+images=`docker image ls | grep -i scottkurt/gallery | grep -i nightly | awk '{print $2}'`
 echo "removing old images"
 for image in $images 
 do 

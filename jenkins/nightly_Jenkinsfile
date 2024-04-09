@@ -28,9 +28,9 @@ pipeline
                 }
             }
         }   
-        stage('Build App Docker Images') {
+        stage('Build  Docker Images') {
             steps {
-                echo 'Building App Dev Images'
+                echo 'Building   Images'
                 sh ". ./nightly/build-tag-docker-images.sh"
                 sh 'docker image ls'
             }
