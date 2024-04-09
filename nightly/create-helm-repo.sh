@@ -8,6 +8,3 @@ helm s3 init s3://gallery-helm-charts/stable/gallery
 aws s3 ls s3://gallery-helm-charts/stable/gallery/
 helm repo add stable-galleryapp s3://gallery-helm-charts/stable/gallery/
 helm repo ls
-
-##remove repo
-#aws s3 rm s3://gallery-helm-charts --recursive

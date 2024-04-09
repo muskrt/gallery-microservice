@@ -18,7 +18,7 @@ pipeline
         stage('Create Helm Repo') {
             steps {
                 echo "Creating Helm Repo for ${APP_NAME} app"
-                sh   './nightly/create-helm-repo.sh'
+                sh   'nightly/create-helm-repo.sh'
             }
         }
         stage('Create K8 Cluster') {
