@@ -15,6 +15,18 @@ pipeline
     }
     stages 
     {
+        stage('Prepare Tags for Docker Images') {
+            steps {
+                echo 'Preparing Tags for Docker Images'
+                script {
+                    env.IMAGE_TAG_APIGW_SERVICE="${APP_REPO_NAME}:apigw-service_${BUILD_ENV}_${BUILD_NUMBER}"
+                    env.IMAGE_TAG_LOGIN_SERVICE="${APP_REPO_NAME}:login-service_${BUILD_ENV}_${BUILD_NUMBER}"
+                    env.IMAGE_TAG_LANDING_SERVICE="${APP_REPO_NAME}:landing-service_${BUILD_ENV}_${BUILD_NUMBER}"
+                    env.IMAGE_TAG_NOTES_SERVICE="${APP_REPO_NAME}:notes-service_${BUILD_ENV}_${BUILD_NUMBER}"
+                                        
+                }
+            }
+        } 
         /*
         stage('Create Helm Repo') {
             steps {
@@ -43,18 +55,7 @@ pipeline
                 sh "ansible-playbook -i ./ansible/inventory/dynamic_inventory_aws_ec2.yaml ./ansible/playbooks/k8_setup.yaml"
             }
         }
-        stage('Prepare Tags for Docker Images') {
-            steps {
-                echo 'Preparing Tags for Docker Images'
-                script {
-                    env.IMAGE_TAG_APIGW_SERVICE="${APP_REPO_NAME}:apigw-service_${BUILD_ENV}_${BUILD_NUMBER}"
-                    env.IMAGE_TAG_LOGIN_SERVICE="${APP_REPO_NAME}:login-service_${BUILD_ENV}_${BUILD_NUMBER}"
-                    env.IMAGE_TAG_LANDING_SERVICE="${APP_REPO_NAME}:landing-service_${BUILD_ENV}_${BUILD_NUMBER}"
-                    env.IMAGE_TAG_NOTES_SERVICE="${APP_REPO_NAME}:notes-service_${BUILD_ENV}_${BUILD_NUMBER}"
-                                        
-                }
-            }
-        }   
+         
         stage('Build  Docker Images') {
             steps {
                 echo 'Building   Images'
