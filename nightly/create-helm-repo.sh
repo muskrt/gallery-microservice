@@ -9,4 +9,4 @@ helm repo add stable-galleryapp s3://gallery-helm-charts/stable/gallery/
 helm repo ls
 
 ##remove repo
-aws s3 rm s3://gallery-helm-charts --recursive
+#aws s3 rm s3://gallery-helm-charts --recursive

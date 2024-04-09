@@ -10,8 +10,9 @@ do
     echo $image
     [  -z "$(docker images -q ${image})" ] || docker  image rm $image 
 done 
-services=`ls  | grep '_service'`
-for service in $services 
-do 
-docker build --force-rm -t "${repo}:`echo ${service} | tr '_' '-'`_${build_env}_${BUILD_NUMBER}" ./${service}
-done 
+
+
+docker build --force-rm -t "${IMAGE_TAG_APIGW_SERVICE}" ./apigw_service
+docker build --force-rm -t "${IMAGE_TAG_LOGIN_SERVICE}" ./login_service
+docker build --force-rm -t "${IMAGE_TAG_LANDING_SERVICE}" ./landing_service
+docker build --force-rm -t "${IMAGE_TAG_NOTES_SERVICE}" ./notes_service
