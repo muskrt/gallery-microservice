@@ -156,7 +156,7 @@
   - name: copy the storage.yml file
     become: yes
     copy: 
-      src: ./storage.yml
+      src: ./storage.yaml
       dest: /home/ubuntu/
   - name: copy the components.yaml file
     become: yes
