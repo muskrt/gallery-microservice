@@ -10,12 +10,15 @@ services:
     labels:
       kompose.service.type: nodeport
       kompose.service.nodeport.port: "30500"
+      kompose.image-pull-secret: "regcred"
 
   login-service:
     image: "{{ .Values.IMAGE_TAG_LANDING_SERVICE }}"
     container_name: login-service
     ports:
       - "30100:30100"
+    labels:
+      kompose.image-pull-secret: "regcred"
   apigw-service:
     image: "{{ .Values.IMAGE_TAG_LANDING_SERVICE }}"
     container_name: apigw-service
@@ -24,11 +27,15 @@ services:
       - NOTES_SERVER=notes-service
     ports:
       - "30200:30200"
+    labels:
+      kompose.image-pull-secret: "regcred"
   notes-service:
     image: "{{ .Values.IMAGE_TAG_LANDING_SERVICE }}"
     container_name: notes-service
     ports:
       - "30300:30300"
+    labels:
+      kompose.image-pull-secret: "regcred"
 
 
 

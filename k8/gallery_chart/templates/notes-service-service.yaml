@@ -3,6 +3,7 @@ kind: Service
 metadata:
   annotations:
     kompose.cmd: kompose convert -f docker-compose.yaml -o gallery_chart/templates/
+    kompose.image-pull-secret: regcred
     kompose.version: 1.32.0 (765fde254)
   labels:
     io.kompose.service: notes-service
