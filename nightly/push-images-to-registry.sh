@@ -1,5 +1,6 @@
 repo=scottkurt/gallery
-images=`docker image ls | grep -i nightly | awk '{print $2}'| grep nightly`
+images=`docker image ls | grep -i nightly | awk '{print $2}'`
+docker image ls
 docker login docker.io -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}
 echo "pushing   images to registry"
 for image in $images 
