@@ -15,7 +15,7 @@ pipeline
     }
     stages 
     {
-       stage('Create Helm Repo') {
+               stage('Create Helm Repo') {
             steps {
                 echo "Creating Helm Repo for ${APP_NAME} app"
                 sh   'nightly/create-helm-repo.sh'
@@ -67,12 +67,13 @@ pipeline
                 sh ". ./nightly/push-images-to-registry.sh"
             }
         }
+
         stage('Deploy App on Kubernetes cluster'){
             steps {
                 echo 'Deploying App on Kubernetes'
                 sh "envsubst < k8/gallery_chart/values-template.yaml > k8/gallery_chart/values.yaml"
                 sh "sed -i s/HELM_VERSION/${BUILD_NUMBER}/ k8/gallery_chart/Chart.yaml"
-                sh "helm repo add stable-gallery s3://gallery-helm-charts/stable/myapp/"
+                sh "helm repo add stable-gallery s3://gallery-helm-charts/stable/gallery/"
                 sh "helm package k8/gallery_chart"
                 sh "helm s3 push --force gallery_chart-${BUILD_NUMBER}.tgz stable-gallery"
                 sh "sleep 60"    
