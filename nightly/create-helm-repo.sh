@@ -4,7 +4,7 @@ HELM_S3_MODE=3
 aws s3 rm s3://gallery-helm-charts --recursive
 aws s3api create-bucket --bucket gallery-helm-charts --region us-east-1
 aws s3api put-object --bucket gallery-helm-charts --key stable/gallery/
-helm s3 init s3://gallery-helm-charts/stable/gallery 
+helm s3 init --force --ignore-if-exists s3://gallery-helm-charts/stable/gallery 
 aws s3 ls s3://gallery-helm-charts/stable/gallery/
 helm repo add stable-gallery s3://gallery-helm-charts/stable/gallery/
 helm repo ls
