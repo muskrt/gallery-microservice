@@ -165,7 +165,7 @@
       dest: /home/ubuntu/
   - name: create StorageClass object
     become: false
-    shell: kubectl apply -f storage.yml
+    shell: kubectl apply -f storage.yaml
   - name: start metric server
     become: false
     shell: kubectl apply -f components.yaml
