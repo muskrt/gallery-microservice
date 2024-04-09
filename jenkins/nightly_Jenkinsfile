@@ -15,33 +15,7 @@ pipeline
     }
     stages 
     {
-        stage('Create Helm Repo') {
-            steps {
-                echo "Creating Helm Repo for ${APP_NAME} app"
-                sh   'nightly/create-helm-repo.sh'
-            }
-        }
-        stage('Create K8 Cluster') {
-            steps {
-                echo "Creating Key Pair for ${APP_NAME} App"
-                sh "aws ec2 create-key-pair --region ${AWS_REGION} --key-name ${ANS_KEYPAIR} --query KeyMaterial --output text > ${ANS_KEYPAIR}"
-                sh "chmod 400 ${ANS_KEYPAIR}"
-                echo 'Creating  Automation Infrastructure for Dev Environment'
-                sh """
-                    cd infrastructure/msp_devops_21_k8_setup
-                    sed -i "s/linux/$ANS_KEYPAIR/g" main.tf
-                    terraform init
-                    terraform apply -auto-approve -no-color
-                """
-                script {
-                    echo "Kubernetes Master is not UP and running yet."
-                    env.id = sh(script: 'aws ec2 describe-instances --filters Name=tag-value,Values=master Name=tag-value,Values=tera-kube-ans Name=instance-state-name,Values=running --query Reservations[*].Instances[*].[InstanceId] --output text',  returnStdout:true).trim()
-                    sh 'aws ec2 wait instance-status-ok --instance-ids $id'
-                }
-                echo "Setup Kubernetes cluster for ${APP_NAME} App"
-                sh "ansible-playbook -i ./ansible/inventory/dynamic_inventory_aws_ec2.yaml ./ansible/playbooks/k8_setup.yaml"
-            }
-        }
+      
         stage('Prepare Tags for Docker Images') {
             steps {
                 echo 'Preparing Tags for Docker Images'
@@ -57,14 +31,14 @@ pipeline
         stage('Build App Docker Images') {
             steps {
                 echo 'Building App Dev Images'
-                sh ". ./nightly/build-tag-docker-imgaes.sh"
+                sh ". ./nightly/build-tag-docker-images.sh"
                 sh 'docker image ls'
             }
         }
         stage('Push Images to Docker Repo') {
             steps {
                 echo "Pushing ${APP_NAME} App Images to  Repo"
-                sh ". ./nightly/push-imgaes-to-registry.sh"
+                sh ". ./nightly/push-images-to-registry.sh"
             }
         }
         stage('Deploy App on Kubernetes cluster'){
@@ -76,21 +50,10 @@ pipeline
                 sh "helm package k8s/gallery_chart"
                 sh "helm s3 push --force gallery_chart-${BUILD_NUMBER}.tgz stable-gallery"
                 sh "sleep 60"    
-                sh "envsubst < ansible/playbooks/deploy_gallery_template > ansible/playbooks/deploy_gallery.yaml"
+                sh "envsubst < ansible/playbooks/deploy_gallery_template.yaml > ansible/playbooks/deploy_gallery.yaml"
                 sh "ansible-playbook -i ./ansible/inventory/dynamic_inventory_aws_ec2.yaml ./ansible/playbooks/deploy_gallery.yaml"
             }
         } 
     }
-    post {
-        always {
-            echo 'Tear down the Kubernetes Cluster'
-            sh """
-            cd infrastructure/msp_devops_21_k8_setup
-            terraform destroy -auto-approve -no-color
-            """
-            echo "Delete existing key pair using AWS CLI"
-            sh "aws ec2 delete-key-pair --region ${AWS_REGION} --key-name ${ANS_KEYPAIR}"
-            sh "rm -rf ${ANS_KEYPAIR}"
-        }
-    }
+
 }
