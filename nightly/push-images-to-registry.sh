@@ -8,7 +8,6 @@ do
     docker push $image
 done 
 images=`docker image ls | grep -i $repo | grep -i nightly |  awk '{print $2}'`
-services=`docker image ls | awk '{print $1}' | grep service `
 echo "removing  images"
 for image in $images 
 do 
