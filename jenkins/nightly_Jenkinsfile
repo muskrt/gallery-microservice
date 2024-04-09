@@ -34,7 +34,7 @@ pipeline
                 sh   'nightly/create-helm-repo.sh'
             }
         }
-        /*
+        
         stage('Create K8 Cluster') {
             steps {
                 echo "Creating Key Pair for ${APP_NAME} App"
@@ -57,7 +57,7 @@ pipeline
             }
         }
          
-         */
+         
         stage('Build  Docker Images') {
             steps {
                 echo 'Building   Images'
