@@ -29,7 +29,7 @@ spec:
               value: login-service
             - name: NOTES_SERVER
               value: notes-service
-          image: '{{ .Values.IMAGE_TAG_LANDING_SERVICE }}'
+          image: '{{ .Values.IMAGE_TAG_APIGW_SERVICE }}'
           name: apigw-service
           ports:
             - containerPort: 30200

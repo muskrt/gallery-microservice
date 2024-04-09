@@ -24,7 +24,7 @@ spec:
         io.kompose.service: login-service
     spec:
       containers:
-        - image: '{{ .Values.IMAGE_TAG_LANDING_SERVICE }}'
+        - image: '{{ .Values.IMAGE_TAG_LOGIN_SERVICE }}'
           name: login-service
           ports:
             - containerPort: 30100

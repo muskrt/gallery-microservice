@@ -24,7 +24,7 @@ spec:
         io.kompose.service: notes-service
     spec:
       containers:
-        - image: '{{ .Values.IMAGE_TAG_LANDING_SERVICE }}'
+        - image: '{{ .Values.IMAGE_TAG_NOTES_SERVICE }}'
           name: notes-service
           ports:
             - containerPort: 30300

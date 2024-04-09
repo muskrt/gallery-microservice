@@ -13,14 +13,14 @@ services:
       kompose.image-pull-secret: "regcred"
 
   login-service:
-    image: "{{ .Values.IMAGE_TAG_LANDING_SERVICE }}"
+    image: "{{ .Values.IMAGE_TAG_LOGIN_SERVICE }}"
     container_name: login-service
     ports:
       - "30100:30100"
     labels:
       kompose.image-pull-secret: "regcred"
   apigw-service:
-    image: "{{ .Values.IMAGE_TAG_LANDING_SERVICE }}"
+    image: "{{ .Values.IMAGE_TAG_APIGW_SERVICE }}"
     container_name: apigw-service
     environment:
       - LOGIN_SERVER=login-service
@@ -30,7 +30,7 @@ services:
     labels:
       kompose.image-pull-secret: "regcred"
   notes-service:
-    image: "{{ .Values.IMAGE_TAG_LANDING_SERVICE }}"
+    image: "{{ .Values.IMAGE_TAG_NOTES_SERVICE }}"
     container_name: notes-service
     ports:
       - "30300:30300"
