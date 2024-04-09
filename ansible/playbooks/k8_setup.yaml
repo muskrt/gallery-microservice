@@ -36,7 +36,7 @@
   - name: update apt-get and install kube packages
     shell: |
       mkdir -p /etc/apt/keyrings && \ 
-      chmod  755 /etc/apt/keyrins && \
+      chmod  755 /etc/apt/keyrings && \
       curl -fsSL --insecure https://pkgs.k8s.io/core:/stable:/v1.27/deb/Release.key |  gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg && \
       echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.27/deb/ /' |  tee /etc/apt/sources.list.d/kubernetes.list && \
       apt-get update -qy && \
@@ -158,7 +158,14 @@
     copy: 
       src: ./storage.yml
       dest: /home/ubuntu/
-
+  - name: copy the components.yaml file
+    become: yes
+    copy: 
+      src: ./components.yaml
+      dest: /home/ubuntu/
   - name: create StorageClass object
     become: false
     shell: kubectl apply -f storage.yml
+  - name: start metric server
+    become: false
+    shell: kubectl apply -f components.yaml
