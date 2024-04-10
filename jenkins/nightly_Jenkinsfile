@@ -26,14 +26,50 @@ pipeline
                 }
             }
         } 
-        
         stage('Create Helm Repo') {
             steps {
                 echo "Creating Helm Repo for ${APP_NAME} app"
                 sh   'nightly/create-helm-repo.sh'
             }
         }
-        
+        stage('Build  Docker Images') {
+            steps {
+                echo 'Building   Images'
+                sh ". ./nightly/build-tag-docker-images.sh"
+                sh 'docker image ls'
+            }
+        }
+        stage('Generate coverage report') {
+            steps {
+                echo "Pushing ${APP_NAME} App Images to  Repo"
+                sh ". ./nightly/unit-tests.sh"
+            }
+        }
+        stage('Publish coverage report') {
+            steps{
+                archive "coverage.xml"
+    
+                cobertura(
+                    coberturaReportFile: "coverage.xml",
+                    onlyStable: true,
+                    failNoReports: true,
+                    failUnhealthy: false,
+                    failUnstable: true,
+                    autoUpdateHealth: true,
+                    autoUpdateStability: true,
+                    zoomCoverageChart: true,
+                    maxNumberOfBuilds: 0,
+                    lineCoverageTargets: '45, 45, 45,45',
+                    )
+            }
+            
+        }
+        stage('Push Images to Docker Repo') {
+            steps {
+                echo "Pushing ${APP_NAME} App Images to  Repo"
+                sh ". ./nightly/push-images-to-registry.sh"
+            }
+        }  
         stage('Create K8 Cluster') {
             steps {
                 echo "Creating Key Pair for ${APP_NAME} App"
@@ -55,40 +91,6 @@ pipeline
                 sh "ansible-playbook -i ./ansible/inventory/dynamic_inventory_aws_ec2.yaml ./ansible/playbooks/k8_setup.yaml"
             }
         }
-         
-         
-        stage('Build  Docker Images') {
-            steps {
-                echo 'Building   Images'
-                sh ". ./nightly/build-tag-docker-images.sh"
-                sh 'docker image ls'
-            }
-        }
-        stage('Push Images to Docker Repo') {
-            steps {
-                echo "Pushing ${APP_NAME} App Images to  Repo"
-                sh ". ./nightly/push-images-to-registry.sh"
-            }
-        }
-        stage('Publish coverage report') {
-            steps{
-                archive "coverage.xml"
-    
-                cobertura(
-                    coberturaReportFile: "coverage.xml",
-                    onlyStable: true,
-                    failNoReports: true,
-                    failUnhealthy: false,
-                    failUnstable: true,
-                    autoUpdateHealth: true,
-                    autoUpdateStability: true,
-                    zoomCoverageChart: true,
-                    maxNumberOfBuilds: 0,
-                    lineCoverageTargets: '15, 15, 15,15',
-                    )
-            }
-            
-        }
         stage('Deploy App on Kubernetes cluster'){
             steps {
                 echo 'Deploying App on Kubernetes'
@@ -109,7 +111,6 @@ pipeline
         }
        
     }
-    
     post {
         always {
             echo 'Tear down the Kubernetes Cluster'
@@ -120,6 +121,7 @@ pipeline
             echo "Delete existing key pair using AWS CLI"
             sh "aws ec2 delete-key-pair --region ${AWS_REGION} --key-name ${ANS_KEYPAIR}"
             sh "rm -rf ${ANS_KEYPAIR}"
+            sh "gallery_chart*.tgz"
         }
     }
     
