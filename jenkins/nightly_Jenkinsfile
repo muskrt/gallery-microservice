@@ -94,7 +94,7 @@ pipeline
         stage('increase version number') {
             steps {
                 script {
-                    env.VERSION='2342342'
+                    VERSION='2342342'
                                         
                 }
             }
@@ -104,10 +104,12 @@ pipeline
                 echo 'Preparing Tags for Docker Images'
                 echo "${VERSION}"
                 script {
+                    withEnv(["VERSION=223344"]) {
                     env.IMAGE_TAG_APIGW_SERVICE="${APP_REPO_NAME}:apigw-service_${BUILD_ENV}_${VERSION}"
                     env.IMAGE_TAG_LOGIN_SERVICE="${APP_REPO_NAME}:login-service_${BUILD_ENV}_${VERSION}"
                     env.IMAGE_TAG_LANDING_SERVICE="${APP_REPO_NAME}:landing-service_${BUILD_ENV}_${VERSION}"
                     env.IMAGE_TAG_NOTES_SERVICE="${APP_REPO_NAME}:notes-service_${BUILD_ENV}_${VERSION}"
+                     }
                                         
                 }
             }
