@@ -5,7 +5,7 @@ pipeline
         PATH=sh(script:"echo $PATH:/usr/local/bin", returnStdout:true).trim()
         APP_NAME="gallery"
         BUILD_ENV="nightly"
-        VERSION=${BUILD_NUMBER}
+        VERSION="${BUILD_NUMBER}"
         APP_REPO_NAME="scottkurt/gallery"
         AWS_ACCOUNT_ID=sh(script:'export PATH="$PATH:/usr/local/bin" && aws sts get-caller-identity --query Account --output text', returnStdout:true).trim()
         AWS_REGION="us-east-1"
@@ -93,7 +93,7 @@ pipeline
                 input('Do you want to proceed?')
             }
         }
-        stage('Prepare Tags for Docker Images') {
+        stage('second Prepare Tags for Docker Images') {
             steps {
                 echo 'Preparing Tags for Docker Images'
                 script {
@@ -105,21 +105,21 @@ pipeline
                 }
             }
         } 
-        stage('Build  Docker Images') {
+        stage('second Build  Docker Images') {
             steps {
                 echo 'Building   Images'
                 sh ". ./nightly/build-tag-docker-images.sh"
                 sh 'docker image ls'
             }
         }
-        stage('Push Images to Docker Repo') {
+        stage('second Push Images to Docker Repo') {
             steps {
                 echo "Pushing ${APP_NAME} App Images to  Repo"
                 sh ". ./nightly/push-images-to-registry.sh"
             }
         }  
 
-        stage('Deploy App on Kubernetes cluster'){
+        stage('second Deploy App on Kubernetes cluster'){
             steps {
                 echo 'Deploying App on Kubernetes'
                 sh "envsubst < k8/gallery_chart/values-template.yaml > k8/gallery_chart/values.yaml"
