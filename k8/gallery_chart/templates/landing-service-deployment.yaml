@@ -33,7 +33,7 @@ spec:
         io.kompose.service: landing-service
     spec:
       containers:
-        - args:
+        - command:
             - go
             - run
             - .

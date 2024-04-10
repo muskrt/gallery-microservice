@@ -29,7 +29,7 @@ spec:
         io.kompose.service: apigw-service
     spec:
       containers:
-        - args:
+        - command:
             - go
             - run
             - .

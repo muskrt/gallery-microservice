@@ -3,7 +3,7 @@ services:
   landing-service:
     image: scottkurt/gallery:landing-service_dev_
     container_name: landing-service
-    command: ["go","run","."]
+    entrypoint: ["go","run","."]
     environment:
       - API_SERVER=apigw-service
     ports:
@@ -24,7 +24,7 @@ services:
   apigw-service:
     image: scottkurt/gallery:apigw-service_dev_
     container_name: apigw-service
-    command: ["go","run","."]
+    entrypoint: ["go","run","."]
     environment:
       - LOGIN_SERVER=login-service
       - NOTES_SERVER=notes-service
