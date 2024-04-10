@@ -22,11 +22,15 @@ pipeline
                 sh   'nightly/create-helm-repo.sh'
             }
         }
-        stage('Create K8 Cluster') {
+        stage(' Create key pair for ansible'){
             steps {
                 echo "Creating Key Pair for ${APP_NAME} App"
                 sh "aws ec2 create-key-pair --region ${AWS_REGION} --key-name ${ANS_KEYPAIR} --query KeyMaterial --output text > ${ANS_KEYPAIR}"
                 sh "chmod 400 ${ANS_KEYPAIR}"
+            }
+        }
+        stage('Create K8 Cluster') {
+            steps {
                 echo 'Creating  Automation Infrastructure for Dev Environment'
                 sh """
                     cd infrastructure/msp_devops_21_k8_setup
@@ -146,10 +150,7 @@ pipeline
     post {
         always {
             echo 'Tear down the Kubernetes Cluster'
-            sh """
-            cd infrastructure/msp_devops_21_k8_setup
-            terraform destroy -auto-approve -no-color
-            """
+           
             echo "Delete existing key pair using AWS CLI"
             sh "aws ec2 delete-key-pair --region ${AWS_REGION} --key-name ${ANS_KEYPAIR}"
             sh "rm -rf ${ANS_KEYPAIR}"

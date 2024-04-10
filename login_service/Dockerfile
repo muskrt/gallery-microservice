@@ -1,5 +1,6 @@
 FROM golang:1.22-alpine
 WORKDIR /app
+RUN rm -rf ./tmp
 COPY . ./
 COPY *.go ./
 COPY *.go ./
