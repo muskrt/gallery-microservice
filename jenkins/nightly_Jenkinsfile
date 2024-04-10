@@ -18,7 +18,6 @@ pipeline
         
         stage('Create Helm Repo') {
             steps {
-                echo "${eseresere}"
                 echo "Creating Helm Repo for ${APP_NAME} app"
                 sh   'nightly/create-helm-repo.sh'
             }
