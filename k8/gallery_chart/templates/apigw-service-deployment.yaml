@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    kompose.cmd: kompose convert -f ./docker-compose.yaml -o gallery_chart/templates/
+    kompose.cmd: kompose convert -f docker-compose.yaml -o gallery_chart/templates/
     kompose.image-pull-secret: regcred
     kompose.version: 1.32.0 (765fde254)
   labels:
@@ -21,7 +21,7 @@ spec:
   template:
     metadata:
       annotations:
-        kompose.cmd: kompose convert -f ./docker-compose.yaml -o gallery_chart/templates/
+        kompose.cmd: kompose convert -f docker-compose.yaml -o gallery_chart/templates/
         kompose.image-pull-secret: regcred
         kompose.version: 1.32.0 (765fde254)
       labels:
@@ -42,10 +42,11 @@ spec:
               protocol: TCP
           resources:
             limits:
-              cpu: 100m
-              memory: "1048576e3"
+              cpu: 200m
+              memory: "209715200"
             requests:
-              memory: "52428800"
+              cpu: 150m
+              memory: "209715200"
       imagePullSecrets:
         - name: regcred
       restartPolicy: Always

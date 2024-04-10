@@ -14,11 +14,11 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.1'
-          memory: 1000M
+          cpus: '0.2'
+          memory: 200M
         reservations:
-          cpus: '0.0001'
-          memory: 50M
+          cpus: '0.15'
+          memory: 200M
       update_config:
         parallelism: 1
         delay: 10s
@@ -44,11 +44,11 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.1'
-          memory: 1000M
+          cpus: '0.2'
+          memory: 200M
         reservations:
-          cpus: '0.0001'
-          memory: 50M
+          cpus: '0.15'
+          memory: 200M
       update_config:
         parallelism: 1
         delay: 10s

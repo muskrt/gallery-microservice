@@ -125,7 +125,7 @@ pipeline
                 withEnv(["VERSION=223355"]) {
                     echo 'Deploying App on Kubernetes'
                     sh "envsubst < k8/gallery_chart/values-template.yaml > k8/gallery_chart/values.yaml"
-                    sh "sed -i s/0.1.0/${VERSION}/g k8/gallery_chart/Chart.yaml"
+                    sh "sed -i s/${BUILD_NUMBER}/${VERSION}/g k8/gallery_chart/Chart.yaml"
                     sh "helm repo add stable-gallery s3://gallery-helm-charts/stable/gallery/"
                     sh "helm package k8/gallery_chart"
                     sh "helm s3 push --force gallery_chart-${VERSION}.tgz stable-gallery"
