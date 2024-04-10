@@ -5,35 +5,56 @@ pipeline
         PATH=sh(script:"echo $PATH:/usr/local/bin", returnStdout:true).trim()
         APP_NAME="gallery"
         BUILD_ENV="nightly"
+        VERSION=${BUILD_NUMBER}
         APP_REPO_NAME="scottkurt/gallery"
         AWS_ACCOUNT_ID=sh(script:'export PATH="$PATH:/usr/local/bin" && aws sts get-caller-identity --query Account --output text', returnStdout:true).trim()
         AWS_REGION="us-east-1"
-        ANS_KEYPAIR="gallery-${APP_NAME}-dev-${BUILD_NUMBER}.key"
+        ANS_KEYPAIR="gallery-${APP_NAME}-dev-${VERSION}.key"
         ANSIBLE_PRIVATE_KEY_FILE="${WORKSPACE}/${ANS_KEYPAIR}"
         ANSIBLE_HOST_KEY_CHECKING="False"
     }
     stages 
     {
-        stage('Prepare Tags for Docker Images') {
-            steps {
-                echo 'Preparing Tags for Docker Images'
-                script {
-                    env.IMAGE_TAG_APIGW_SERVICE="${APP_REPO_NAME}:apigw-service_${BUILD_ENV}_${BUILD_NUMBER}"
-                    env.IMAGE_TAG_LOGIN_SERVICE="${APP_REPO_NAME}:login-service_${BUILD_ENV}_${BUILD_NUMBER}"
-                    env.IMAGE_TAG_LANDING_SERVICE="${APP_REPO_NAME}:landing-service_${BUILD_ENV}_${BUILD_NUMBER}"
-                    env.IMAGE_TAG_NOTES_SERVICE="${APP_REPO_NAME}:notes-service_${BUILD_ENV}_${BUILD_NUMBER}"
-                                        
-                }
-            }
-        } 
-        
+
         stage('Create Helm Repo') {
             steps {
                 echo "Creating Helm Repo for ${APP_NAME} app"
                 sh   'nightly/create-helm-repo.sh'
             }
         }
-        
+        stage('Create K8 Cluster') {
+            steps {
+                echo "Creating Key Pair for ${APP_NAME} App"
+                sh "aws ec2 create-key-pair --region ${AWS_REGION} --key-name ${ANS_KEYPAIR} --query KeyMaterial --output text > ${ANS_KEYPAIR}"
+                sh "chmod 400 ${ANS_KEYPAIR}"
+                echo 'Creating  Automation Infrastructure for Dev Environment'
+                sh """
+                    cd infrastructure/msp_devops_21_k8_setup
+                    sed -i "s/linux/$ANS_KEYPAIR/g" main.tf
+                    terraform init
+                    terraform apply -auto-approve -no-color
+                """
+                script {
+                    echo "Kubernetes Master is not UP and running yet."
+                    env.id = sh(script: 'aws ec2 describe-instances --filters Name=tag-value,Values=master Name=tag-value,Values=tera-kube-ans Name=instance-state-name,Values=running --query Reservations[*].Instances[*].[InstanceId] --output text',  returnStdout:true).trim()
+                    sh 'aws ec2 wait instance-status-ok --instance-ids $id'
+                }
+                echo "Setup Kubernetes cluster for ${APP_NAME} App"
+                sh "ansible-playbook -i ./ansible/inventory/dynamic_inventory_aws_ec2.yaml ./ansible/playbooks/k8_setup.yaml"
+            }
+        }
+        stage('Prepare Tags for Docker Images') {
+            steps {
+                echo 'Preparing Tags for Docker Images'
+                script {
+                    env.IMAGE_TAG_APIGW_SERVICE="${APP_REPO_NAME}:apigw-service_${BUILD_ENV}_${VERSION}"
+                    env.IMAGE_TAG_LOGIN_SERVICE="${APP_REPO_NAME}:login-service_${BUILD_ENV}_${VERSION}"
+                    env.IMAGE_TAG_LANDING_SERVICE="${APP_REPO_NAME}:landing-service_${BUILD_ENV}_${VERSION}"
+                    env.IMAGE_TAG_NOTES_SERVICE="${APP_REPO_NAME}:notes-service_${BUILD_ENV}_${VERSION}"
+                                        
+                }
+            }
+        } 
         stage('Build  Docker Images') {
             steps {
                 echo 'Building   Images'
@@ -41,7 +62,7 @@ pipeline
                 sh 'docker image ls'
             }
         }
-        
+        /*
         stage('Generate coverage report') {
             steps {
                 echo "Generating coverage for  ${APP_NAME}  Images "
@@ -68,51 +89,76 @@ pipeline
             }
             
         }
+        */
         stage('Push Images to Docker Repo') {
             steps {
                 echo "Pushing ${APP_NAME} App Images to  Repo"
                 sh ". ./nightly/push-images-to-registry.sh"
             }
         }  
-        stage('Create K8 Cluster') {
-            steps {
-                echo "Creating Key Pair for ${APP_NAME} App"
-                sh "aws ec2 create-key-pair --region ${AWS_REGION} --key-name ${ANS_KEYPAIR} --query KeyMaterial --output text > ${ANS_KEYPAIR}"
-                sh "chmod 400 ${ANS_KEYPAIR}"
-                echo 'Creating  Automation Infrastructure for Dev Environment'
-                sh """
-                    cd infrastructure/msp_devops_21_k8_setup
-                    sed -i "s/linux/$ANS_KEYPAIR/g" main.tf
-                    terraform init
-                    terraform apply -auto-approve -no-color
-                """
-                script {
-                    echo "Kubernetes Master is not UP and running yet."
-                    env.id = sh(script: 'aws ec2 describe-instances --filters Name=tag-value,Values=master Name=tag-value,Values=tera-kube-ans Name=instance-state-name,Values=running --query Reservations[*].Instances[*].[InstanceId] --output text',  returnStdout:true).trim()
-                    sh 'aws ec2 wait instance-status-ok --instance-ids $id'
-                }
-                echo "Setup Kubernetes cluster for ${APP_NAME} App"
-                sh "ansible-playbook -i ./ansible/inventory/dynamic_inventory_aws_ec2.yaml ./ansible/playbooks/k8_setup.yaml"
-            }
-        }
+
         stage('Deploy App on Kubernetes cluster'){
             steps {
                 echo 'Deploying App on Kubernetes'
                 sh "envsubst < k8/gallery_chart/values-template.yaml > k8/gallery_chart/values.yaml"
-                sh "sed -i s/0.1.0/${BUILD_NUMBER}/g k8/gallery_chart/Chart.yaml"
+                sh "sed -i s/0.1.0/${VERSION}/g k8/gallery_chart/Chart.yaml"
                 sh "helm repo add stable-gallery s3://gallery-helm-charts/stable/gallery/"
                 sh "helm package k8/gallery_chart"
-                sh "helm s3 push --force gallery_chart-${BUILD_NUMBER}.tgz stable-gallery"
+                sh "helm s3 push --force gallery_chart-${VERSION}.tgz stable-gallery"
+                sh "sleep 60"    
+                sh "envsubst < ansible/playbooks/deploy_gallery_template.yaml > ansible/playbooks/deploy_gallery.yaml"
+                sh "ansible-playbook -i ./ansible/inventory/dynamic_inventory_aws_ec2.yaml ./ansible/playbooks/deploy_gallery.yaml"
+            }
+        } 
+        environment{
+             VERSION=$(expr $VERSION + 1)
+             
+        }  
+        stage('Input') {
+           
+            steps {
+                input('Do you want to proceed?')
+            }
+        }
+        stage('Prepare Tags for Docker Images') {
+            steps {
+                echo 'Preparing Tags for Docker Images'
+                script {
+                    env.IMAGE_TAG_APIGW_SERVICE="${APP_REPO_NAME}:apigw-service_${BUILD_ENV}_${VERSION}"
+                    env.IMAGE_TAG_LOGIN_SERVICE="${APP_REPO_NAME}:login-service_${BUILD_ENV}_${VERSION}"
+                    env.IMAGE_TAG_LANDING_SERVICE="${APP_REPO_NAME}:landing-service_${BUILD_ENV}_${VERSION}"
+                    env.IMAGE_TAG_NOTES_SERVICE="${APP_REPO_NAME}:notes-service_${BUILD_ENV}_${VERSION}"
+                                        
+                }
+            }
+        } 
+        stage('Build  Docker Images') {
+            steps {
+                echo 'Building   Images'
+                sh ". ./nightly/build-tag-docker-images.sh"
+                sh 'docker image ls'
+            }
+        }
+        stage('Push Images to Docker Repo') {
+            steps {
+                echo "Pushing ${APP_NAME} App Images to  Repo"
+                sh ". ./nightly/push-images-to-registry.sh"
+            }
+        }  
+
+        stage('Deploy App on Kubernetes cluster'){
+            steps {
+                echo 'Deploying App on Kubernetes'
+                sh "envsubst < k8/gallery_chart/values-template.yaml > k8/gallery_chart/values.yaml"
+                sh "sed -i s/0.1.0/${VERSION}/g k8/gallery_chart/Chart.yaml"
+                sh "helm repo add stable-gallery s3://gallery-helm-charts/stable/gallery/"
+                sh "helm package k8/gallery_chart"
+                sh "helm s3 push --force gallery_chart-${VERSION}.tgz stable-gallery"
                 sh "sleep 60"    
                 sh "envsubst < ansible/playbooks/deploy_gallery_template.yaml > ansible/playbooks/deploy_gallery.yaml"
                 sh "ansible-playbook -i ./ansible/inventory/dynamic_inventory_aws_ec2.yaml ./ansible/playbooks/deploy_gallery.yaml"
             }
         }   
-        stage('Input') {
-            steps {
-                input('Do you want to proceed?')
-            }
-        }
     }
     post {
         always {
