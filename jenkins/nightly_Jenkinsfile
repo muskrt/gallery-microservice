@@ -47,7 +47,7 @@ pipeline
         }
         stage('Publish coverage report') {
             steps{
-                archive "coverage.xml"
+                archiveArtifacts "**/coverage.xml"
     
                 cobertura(
                     coberturaReportFile: "coverage.xml",
