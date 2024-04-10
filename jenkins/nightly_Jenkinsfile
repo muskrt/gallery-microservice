@@ -84,7 +84,7 @@ pipeline
             }
         } 
         environment{
-             VERSION=$(expr ${VERSION} + 1)
+             VERSION=1534343
              
         }  
         stage('Input') {
