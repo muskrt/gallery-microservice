@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    kompose.cmd: kompose convert -f docker-compose.yaml -o gallery_chart/templates/
+    kompose.cmd: kompose convert -f ./docker-compose.yaml -o gallery_chart/templates/
     kompose.image-pull-secret: regcred
     kompose.service.nodeport.port: "30500"
     kompose.service.type: nodeport
@@ -15,10 +15,15 @@ spec:
   selector:
     matchLabels:
       io.kompose.service: landing-service
+  strategy:
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
+    type: RollingUpdate
   template:
     metadata:
       annotations:
-        kompose.cmd: kompose convert -f docker-compose.yaml -o gallery_chart/templates/
+        kompose.cmd: kompose convert -f ./docker-compose.yaml -o gallery_chart/templates/
         kompose.image-pull-secret: regcred
         kompose.service.nodeport.port: "30500"
         kompose.service.type: nodeport
@@ -37,6 +42,12 @@ spec:
             - containerPort: 8080
               hostPort: 8080
               protocol: TCP
+          resources:
+            limits:
+              cpu: 100m
+              memory: "1048576e3"
+            requests:
+              memory: "52428800"
       imagePullSecrets:
         - name: regcred
       restartPolicy: Always

@@ -11,6 +11,18 @@ services:
       kompose.service.type: nodeport
       kompose.service.nodeport.port: "30500"
       kompose.image-pull-secret: "regcred"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.1'
+          memory: 1000M
+        reservations:
+          cpus: '0.0001'
+          memory: 50M
+      update_config:
+        parallelism: 1
+        delay: 10s
+        order: stop-first
 
   login-service:
     image: "{{ .Values.IMAGE_TAG_LOGIN_SERVICE }}"
@@ -29,6 +41,19 @@ services:
       - "30200:30200"
     labels:
       kompose.image-pull-secret: "regcred"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.1'
+          memory: 1000M
+        reservations:
+          cpus: '0.0001'
+          memory: 50M
+      update_config:
+        parallelism: 1
+        delay: 10s
+        order: stop-first
+
   notes-service:
     image: "{{ .Values.IMAGE_TAG_NOTES_SERVICE }}"
     container_name: notes-service

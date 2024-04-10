@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    kompose.cmd: kompose convert -f docker-compose.yaml -o gallery_chart/templates/
+    kompose.cmd: kompose convert -f ./docker-compose.yaml -o gallery_chart/templates/
     kompose.image-pull-secret: regcred
     kompose.version: 1.32.0 (765fde254)
   labels:
@@ -13,10 +13,15 @@ spec:
   selector:
     matchLabels:
       io.kompose.service: apigw-service
+  strategy:
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
+    type: RollingUpdate
   template:
     metadata:
       annotations:
-        kompose.cmd: kompose convert -f docker-compose.yaml -o gallery_chart/templates/
+        kompose.cmd: kompose convert -f ./docker-compose.yaml -o gallery_chart/templates/
         kompose.image-pull-secret: regcred
         kompose.version: 1.32.0 (765fde254)
       labels:
@@ -35,6 +40,12 @@ spec:
             - containerPort: 30200
               hostPort: 30200
               protocol: TCP
+          resources:
+            limits:
+              cpu: 100m
+              memory: "1048576e3"
+            requests:
+              memory: "52428800"
       imagePullSecrets:
         - name: regcred
       restartPolicy: Always
