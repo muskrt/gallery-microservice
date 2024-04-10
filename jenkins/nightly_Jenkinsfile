@@ -82,13 +82,13 @@ pipeline
                 sh "envsubst < ansible/playbooks/deploy_gallery_template.yaml > ansible/playbooks/deploy_gallery.yaml"
                 sh "ansible-playbook -i ./ansible/inventory/dynamic_inventory_aws_ec2.yaml ./ansible/playbooks/deploy_gallery.yaml"
             }
-        } 
+        }
         stage('Input') {
            
             steps {
                 input('Do you want to proceed?')
             }
-        }
+        } 
         stage('increase version number') {
             steps {
                 script {
@@ -136,6 +136,12 @@ pipeline
                 sh "ansible-playbook -i ./ansible/inventory/dynamic_inventory_aws_ec2.yaml ./ansible/playbooks/deploy_gallery.yaml"
             }
         }   
+        stage('second Input') {
+           
+            steps {
+                input('Do you want to proceed?')
+            }
+        }
     }
     post {
         always {
