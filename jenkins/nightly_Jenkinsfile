@@ -102,6 +102,7 @@ pipeline
         stage('second Prepare Tags for Docker Images') {
             steps {
                 echo 'Preparing Tags for Docker Images'
+                echo "${VERSION}"
                 script {
                     env.IMAGE_TAG_APIGW_SERVICE="${APP_REPO_NAME}:apigw-service_${BUILD_ENV}_${VERSION}"
                     env.IMAGE_TAG_LOGIN_SERVICE="${APP_REPO_NAME}:login-service_${BUILD_ENV}_${VERSION}"
