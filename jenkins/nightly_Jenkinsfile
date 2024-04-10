@@ -49,7 +49,6 @@ pipeline
                 sh "ansible-playbook -i ./ansible/inventory/dynamic_inventory_aws_ec2.yaml ./ansible/playbooks/k8_setup.yaml"
             }
         }
-        
         stage('Prepare Tags for Docker Images') {
             steps {
                 echo 'Preparing Tags for Docker Images'
@@ -69,14 +68,37 @@ pipeline
                 sh 'docker image ls'
             }
         }
+        stage('Generate coverage report') {
+            steps {
+                echo "Generating coverage for  ${APP_NAME}  Images "
+                sh ". ./nightly/unit-tests.sh"
+            }
+        }
+        stage('Publish coverage report') {
+            steps{
+                archiveArtifacts "**/coverage.xml"
     
+                cobertura(
+                    coberturaReportFile: "**/coverage.xml",
+                    onlyStable: true,
+                    failNoReports: true,
+                    failUnhealthy: false,
+                    failUnstable: true,
+                    autoUpdateHealth: true,
+                    autoUpdateStability: true,
+                    zoomCoverageChart: true,
+                    maxNumberOfBuilds: 0,
+                    lineCoverageTargets: '20, 20, 20,20',
+                    )
+            }
+            
+        }
         stage('Push Images to Docker Repo') {
             steps {
                 echo "Pushing ${APP_NAME} App Images to  Repo"
                 sh ". ./nightly/push-images-to-registry.sh"
             }
         }  
-
         stage('Deploy App on Kubernetes cluster'){
             steps {
                 echo 'Deploying App on Kubernetes'
@@ -90,7 +112,6 @@ pipeline
                 sh "ansible-playbook -i ./ansible/inventory/dynamic_inventory_aws_ec2.yaml ./ansible/playbooks/deploy_gallery.yaml"
             }
         }
-        
         stage('Input') {
            
             steps {
@@ -124,8 +145,7 @@ pipeline
                 echo "Pushing ${APP_NAME} App Images to  Repo"
                 sh ". ./nightly/push-images-to-registry.sh"
             }
-        }  
-
+        }
         stage('second Deploy App on Kubernetes cluster'){
             steps {
                 withEnv(["VERSION=223355"]) {
@@ -141,7 +161,6 @@ pipeline
                 }
             }
         }   
-        
         stage('second Input') {
            
             steps {

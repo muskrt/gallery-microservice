@@ -48,10 +48,10 @@ spec:
               protocol: TCP
           resources:
             limits:
-              cpu: 500m
-              memory: "209715200"
+              cpu: 1500m
+              memory: "524288e3"
             requests:
-              cpu: 250m
+              cpu: "1"
               memory: "209715200"
       imagePullSecrets:
         - name: regcred
