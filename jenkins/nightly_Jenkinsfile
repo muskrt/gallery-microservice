@@ -8,7 +8,6 @@ pipeline
         APP_REPO_NAME="scottkurt/gallery"
         AWS_ACCOUNT_ID=sh(script:'export PATH="$PATH:/usr/local/bin" && aws sts get-caller-identity --query Account --output text', returnStdout:true).trim()
         AWS_REGION="us-east-1"
-        ECR_REGISTRY="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
         ANS_KEYPAIR="gallery-${APP_NAME}-dev-${BUILD_NUMBER}.key"
         ANSIBLE_PRIVATE_KEY_FILE="${WORKSPACE}/${ANS_KEYPAIR}"
         ANSIBLE_HOST_KEY_CHECKING="False"
@@ -70,6 +69,25 @@ pipeline
                 echo "Pushing ${APP_NAME} App Images to  Repo"
                 sh ". ./nightly/push-images-to-registry.sh"
             }
+        }
+        stage('Publish coverage report') {
+            steps{
+                archive "coverage.xml"
+    
+                cobertura(
+                    coberturaReportFile: "coverage.xml",
+                    onlyStable: true,
+                    failNoReports: true,
+                    failUnhealthy: false,
+                    failUnstable: true,
+                    autoUpdateHealth: true,
+                    autoUpdateStability: true,
+                    zoomCoverageChart: true,
+                    maxNumberOfBuilds: 0,
+                    lineCoverageTargets: '15, 15, 15,15',
+                    )
+            }
+            
         }
         stage('Deploy App on Kubernetes cluster'){
             steps {

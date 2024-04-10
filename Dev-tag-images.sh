@@ -1,3 +1,4 @@
+
 repo=scottkurt/gallery
 images=`docker image ls | grep -i scottkurt/gallery | awk '{print $2}'`
 services=`docker image ls | awk '{print $1}' | grep service `
