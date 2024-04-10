@@ -15,7 +15,7 @@ pipeline
     }
     stages 
     {
-
+        /*
         stage('Create Helm Repo') {
             steps {
                 echo "Creating Helm Repo for ${APP_NAME} app"
@@ -43,6 +43,7 @@ pipeline
                 sh "ansible-playbook -i ./ansible/inventory/dynamic_inventory_aws_ec2.yaml ./ansible/playbooks/k8_setup.yaml"
             }
         }
+        */
         stage('Prepare Tags for Docker Images') {
             steps {
                 echo 'Preparing Tags for Docker Images'
@@ -69,7 +70,7 @@ pipeline
                 sh ". ./nightly/push-images-to-registry.sh"
             }
         }  
-
+/*
         stage('Deploy App on Kubernetes cluster'){
             steps {
                 echo 'Deploying App on Kubernetes'
@@ -83,6 +84,7 @@ pipeline
                 sh "ansible-playbook -i ./ansible/inventory/dynamic_inventory_aws_ec2.yaml ./ansible/playbooks/deploy_gallery.yaml"
             }
         }
+        */
         stage('Input') {
            
             steps {
@@ -122,7 +124,7 @@ pipeline
                 sh ". ./nightly/push-images-to-registry.sh"
             }
         }  
-
+/*
         stage('second Deploy App on Kubernetes cluster'){
             steps {
                 echo 'Deploying App on Kubernetes'
@@ -136,6 +138,7 @@ pipeline
                 sh "ansible-playbook -i ./ansible/inventory/dynamic_inventory_aws_ec2.yaml ./ansible/playbooks/deploy_gallery.yaml"
             }
         }   
+        */
         stage('second Input') {
            
             steps {
