@@ -83,16 +83,20 @@ pipeline
                 sh "ansible-playbook -i ./ansible/inventory/dynamic_inventory_aws_ec2.yaml ./ansible/playbooks/deploy_gallery.yaml"
             }
         } 
-        environment{
-             VERSION=1534343
-             
-        }  
         stage('Input') {
            
             steps {
                 input('Do you want to proceed?')
             }
         }
+        stage('increase version number') {
+            steps {
+                script {
+                    env.VERSION="233232"
+                                        
+                }
+            }
+        } 
         stage('second Prepare Tags for Docker Images') {
             steps {
                 echo 'Preparing Tags for Docker Images'
