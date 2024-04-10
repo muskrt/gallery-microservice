@@ -62,34 +62,7 @@ pipeline
                 sh 'docker image ls'
             }
         }
-        /*
-        stage('Generate coverage report') {
-            steps {
-                echo "Generating coverage for  ${APP_NAME}  Images "
-                sh ". ./nightly/unit-tests.sh"
-            }
-        }
-        
-        stage('Publish coverage report') {
-            steps{
-                archiveArtifacts "**/coverage.xml"
     
-                cobertura(
-                    coberturaReportFile: "**/coverage.xml",
-                    onlyStable: true,
-                    failNoReports: true,
-                    failUnhealthy: false,
-                    failUnstable: true,
-                    autoUpdateHealth: true,
-                    autoUpdateStability: true,
-                    zoomCoverageChart: true,
-                    maxNumberOfBuilds: 0,
-                    lineCoverageTargets: '20, 20, 20,20',
-                    )
-            }
-            
-        }
-        */
         stage('Push Images to Docker Repo') {
             steps {
                 echo "Pushing ${APP_NAME} App Images to  Repo"
