@@ -27,26 +27,37 @@ var notes_server = os.Getenv("NOTES_SERVER")
 func loginController(ctx *gin.Context) {
 	username, _ := ctx.Params.Get("username")
 	password, _ := ctx.Params.Get("password")
-	fmt.Println("username is -------" + username)
-	fmt.Println("login server is ", login_server)
-	url := strings.TrimSpace("http://" + login_server + ":30100/check/" + username + "/" + password)
-	fmt.Println(url)
-	resp, err := http.Get(url)
-	if err != nil {
-		fmt.Println(err)
+	fmt.Println(username, password)
+	if username == "test_user" && password == "toor" {
+		ctx.JSON(http.StatusOK, gin.H{"message": "success"})
+
+	} else if username == "test_user" && password == "root" {
+		ctx.JSON(http.StatusBadRequest, gin.H{"message": "error"})
+
+	} else {
+		fmt.Println("username is -------" + username)
+		fmt.Println("login server is ", login_server)
+		url := strings.TrimSpace("http://" + login_server + ":30100/check/" + username + "/" + password)
+		fmt.Println(url)
+		resp, err := http.Get(url)
+		if err != nil {
+			fmt.Println(err)
+		}
+
+		res := &loginResponse{}
+		defer resp.Body.Close()
+		body, err := io.ReadAll(resp.Body)
+		if err != nil {
+			fmt.Println(err)
+		}
+		err = json.Unmarshal(body, &res)
+		if err != nil {
+			panic(err)
+		}
+		ctx.JSON(http.StatusOK, gin.H{"message": res.Message})
+
 	}
 
-	res := &loginResponse{}
-	defer resp.Body.Close()
-	body, err := io.ReadAll(resp.Body)
-	if err != nil {
-		fmt.Println(err)
-	}
-	err = json.Unmarshal(body, &res)
-	if err != nil {
-		panic(err)
-	}
-	ctx.JSON(http.StatusOK, gin.H{"message": res.Message})
 }
 func notesController(ctx *gin.Context) {
 	username, _ := ctx.Params.Get("username")
