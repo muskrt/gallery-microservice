@@ -94,7 +94,7 @@ pipeline
         stage('increase version number') {
             steps {
                 script {
-                    env.VERSION='$(expr "${BUILD_NUMBER}" + 1)'
+                    env.VERSION='2342342'
                                         
                 }
             }
