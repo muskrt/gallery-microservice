@@ -92,7 +92,7 @@ pipeline
         stage('increase version number') {
             steps {
                 script {
-                    env.VERSION="233232"
+                    env.VERSION="${BUILD_NUMBER+1}"
                                         
                 }
             }
