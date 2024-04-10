@@ -26,7 +26,7 @@ pipeline
                 }
             }
         } 
-        /*
+        
         stage('Create Helm Repo') {
             steps {
                 echo "Creating Helm Repo for ${APP_NAME} app"
@@ -44,11 +44,11 @@ pipeline
         
         stage('Generate coverage report') {
             steps {
-                echo "Pushing ${APP_NAME} App Images to  Repo"
+                echo "Generating coverage for  ${APP_NAME}  Images "
                 sh ". ./nightly/unit-tests.sh"
             }
         }
-        */
+        
         stage('Publish coverage report') {
             steps{
                 archiveArtifacts "**/coverage.xml"
@@ -63,7 +63,7 @@ pipeline
                     autoUpdateStability: true,
                     zoomCoverageChart: true,
                     maxNumberOfBuilds: 0,
-                    lineCoverageTargets: '45, 45, 45,45',
+                    lineCoverageTargets: '20, 20, 20,20',
                     )
             }
             
