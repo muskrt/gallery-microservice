@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    kompose.cmd: kompose convert -f docker-compose.yaml -o gallery_chart/templates/
+    kompose.cmd: kompose convert -f ./docker-compose.yaml -o gallery_chart/templates/
     kompose.image-pull-secret: regcred
     kompose.version: 1.32.0 (765fde254)
   labels:
@@ -21,7 +21,7 @@ spec:
   template:
     metadata:
       annotations:
-        kompose.cmd: kompose convert -f docker-compose.yaml -o gallery_chart/templates/
+        kompose.cmd: kompose convert -f ./docker-compose.yaml -o gallery_chart/templates/
         kompose.image-pull-secret: regcred
         kompose.version: 1.32.0 (765fde254)
       labels:
@@ -29,7 +29,11 @@ spec:
         io.kompose.service: apigw-service
     spec:
       containers:
-        - env:
+        - args:
+            - go
+            - run
+            - .
+          env:
             - name: LOGIN_SERVER
               value: login-service
             - name: NOTES_SERVER
@@ -42,10 +46,10 @@ spec:
               protocol: TCP
           resources:
             limits:
-              cpu: 200m
+              cpu: 500m
               memory: "209715200"
             requests:
-              cpu: 150m
+              cpu: 250m
               memory: "209715200"
       imagePullSecrets:
         - name: regcred

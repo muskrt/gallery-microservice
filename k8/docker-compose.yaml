@@ -3,6 +3,7 @@ services:
   landing-service:
     image: "{{ .Values.IMAGE_TAG_LANDING_SERVICE }}"
     container_name: landing-service
+    command: ["go","run","."]
     environment:
       - API_SERVER=apigw-service
     ports:
@@ -27,6 +28,7 @@ services:
   login-service:
     image: "{{ .Values.IMAGE_TAG_LOGIN_SERVICE }}"
     container_name: login-service
+    command: ["go","run","."]
     ports:
       - "30100:30100"
     labels:
@@ -34,6 +36,7 @@ services:
   apigw-service:
     image: "{{ .Values.IMAGE_TAG_APIGW_SERVICE }}"
     container_name: apigw-service
+    command: ["go","run","."]
     environment:
       - LOGIN_SERVER=login-service
       - NOTES_SERVER=notes-service
@@ -57,6 +60,7 @@ services:
   notes-service:
     image: "{{ .Values.IMAGE_TAG_NOTES_SERVICE }}"
     container_name: notes-service
+    command: ["go","run","."]
     ports:
       - "30300:30300"
     labels:

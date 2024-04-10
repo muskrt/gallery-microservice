@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    kompose.cmd: kompose convert -f docker-compose.yaml -o gallery_chart/templates/
+    kompose.cmd: kompose convert -f ./docker-compose.yaml -o gallery_chart/templates/
     kompose.image-pull-secret: regcred
     kompose.service.nodeport.port: "30500"
     kompose.service.type: nodeport
@@ -23,7 +23,7 @@ spec:
   template:
     metadata:
       annotations:
-        kompose.cmd: kompose convert -f docker-compose.yaml -o gallery_chart/templates/
+        kompose.cmd: kompose convert -f ./docker-compose.yaml -o gallery_chart/templates/
         kompose.image-pull-secret: regcred
         kompose.service.nodeport.port: "30500"
         kompose.service.type: nodeport
@@ -33,7 +33,11 @@ spec:
         io.kompose.service: landing-service
     spec:
       containers:
-        - env:
+        - args:
+            - go
+            - run
+            - .
+          env:
             - name: API_SERVER
               value: apigw-service
           image: '{{ .Values.IMAGE_TAG_LANDING_SERVICE }}'
@@ -44,10 +48,10 @@ spec:
               protocol: TCP
           resources:
             limits:
-              cpu: 200m
+              cpu: 500m
               memory: "209715200"
             requests:
-              cpu: 150m
+              cpu: 250m
               memory: "209715200"
       imagePullSecrets:
         - name: regcred

@@ -15,13 +15,15 @@ pipeline
     }
     stages 
     {
-        
+        /*
         stage('Create Helm Repo') {
             steps {
+                echo "${eseresere}"
                 echo "Creating Helm Repo for ${APP_NAME} app"
                 sh   'nightly/create-helm-repo.sh'
             }
         }
+        */
         stage(' Create key pair for ansible'){
             steps {
                 echo "Creating Key Pair for ${APP_NAME} App"
@@ -29,6 +31,7 @@ pipeline
                 sh "chmod 400 ${ANS_KEYPAIR}"
             }
         }
+        /*
         stage('Create K8 Cluster') {
             steps {
                 echo 'Creating  Automation Infrastructure for Dev Environment'
@@ -47,7 +50,7 @@ pipeline
                 sh "ansible-playbook -i ./ansible/inventory/dynamic_inventory_aws_ec2.yaml ./ansible/playbooks/k8_setup.yaml"
             }
         }
-        
+        */
         stage('Prepare Tags for Docker Images') {
             steps {
                 echo 'Preparing Tags for Docker Images'
@@ -150,7 +153,10 @@ pipeline
     post {
         always {
             echo 'Tear down the Kubernetes Cluster'
-           
+            sh """
+            cd infrastructure/msp_devops_21_k8_setup
+            terraform destroy -auto-approve -no-color
+            """
             echo "Delete existing key pair using AWS CLI"
             sh "aws ec2 delete-key-pair --region ${AWS_REGION} --key-name ${ANS_KEYPAIR}"
             sh "rm -rf ${ANS_KEYPAIR}"
