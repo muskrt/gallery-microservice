@@ -109,7 +109,6 @@ pipeline
                 input('Do you want to proceed?')
             }
         }
-       
     }
     post {
         always {
