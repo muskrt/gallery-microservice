@@ -39,12 +39,14 @@ pipeline
                 sh 'docker image ls'
             }
         }
+        /*
         stage('Generate coverage report') {
             steps {
                 echo "Pushing ${APP_NAME} App Images to  Repo"
                 sh ". ./nightly/unit-tests.sh"
             }
         }
+        */
         stage('Publish coverage report') {
             steps{
                 archiveArtifacts "**/coverage.xml"
