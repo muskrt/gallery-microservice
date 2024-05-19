@@ -34,7 +34,8 @@ This project aims to create full CI/CD Pipeline for microservice based applicati
 | Nightly Build  | Prepare k8 set up files | MSP-21  | prepare k8 set up files with terraform and ansible | feature/msp_devops_21 |
 | Nightly Build  | prepare helm repo in s3(aws) | MSP-22  | write a script to create helm repo | feature/msp_devops_22 |
 | Nightly Build  | create ansible playbook | MSP-23  | prepate deployment playbook | feature/msp_devops_23 |
-| Nightly Build  | Unit Test | MSP-24  | create a script to run unit tests | feature/msp_devops_24 |
+| Nightly Build  | Unit Test | MSP-24  | implement nigthly pipeline | feature/msp_devops_24 |
+| weekly Build  | Unit Test | MSP-25  | create eksctl config file | feature/msp_devops_25 |
 
 
 

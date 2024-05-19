@@ -80,6 +80,10 @@ func loginPostController(ctx *gin.Context) {
 func newServer() *gin.Engine {
 	server := gin.New()
 	server.LoadHTMLGlob("templates/*.html")
+	server.GET("/", func(c *gin.Context) {
+		c.Redirect(http.StatusFound, "/login")
+
+	})
 	server.GET("/login", loginGetController)
 	server.POST("/login", loginPostController)
 	server.GET("/notes/:username", notesGetController)

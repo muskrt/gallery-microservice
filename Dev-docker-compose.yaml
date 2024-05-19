@@ -4,6 +4,8 @@ services:
     image: scottkurt/gallery:landing-service_dev_
     container_name: landing-service
     entrypoint: ["go","run","."]
+    depends_on:
+      - apigw-service
     environment:
       - API_SERVER=apigw-service
     ports:
@@ -12,6 +14,14 @@ services:
       - type: bind
         source: ./landing_service/
         target: /app
+    deploy:
+      resources:
+        limits:
+          cpus: 0.5
+          memory: 500M
+        reservations:
+          cpus: 0.5
+          memory: 500M
   login-service:
     image: scottkurt/gallery:login-service_dev_
     container_name: login-service
@@ -21,6 +31,14 @@ services:
       - type: bind
         source: ./login_service
         target: /app
+    deploy:
+      resources:
+        limits:
+          cpus: 0.5
+          memory: 500M
+        reservations:
+          cpus: 0.5
+          memory: 500M
   apigw-service:
     image: scottkurt/gallery:apigw-service_dev_
     container_name: apigw-service
@@ -28,12 +46,23 @@ services:
     environment:
       - LOGIN_SERVER=login-service
       - NOTES_SERVER=notes-service
+    depends_on:
+      - login-service
     ports:
       - "30200:30200"
     volumes:
       - type: bind
         source: ./apigw_service
         target: /app
+    deploy:
+      resources:
+        limits:
+          cpus: 0.5
+          memory: 500M
+        reservations:
+          cpus: 0.5
+          memory: 500M        
+
   notes-service:
     image: scottkurt/gallery:notes-service_dev_
     container_name: notes-service
@@ -43,4 +72,12 @@ services:
       - type: bind
         source: ./notes_service
         target: /app
+    deploy:
+      resources:
+        limits:
+          cpus: 0.3
+          memory: 500M
+        reservations:
+          cpus: 0.3
+          memory: 500M
 

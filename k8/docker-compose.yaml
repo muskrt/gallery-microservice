@@ -15,10 +15,8 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '1.5'
           memory: 500M
         reservations:
-          cpus: '1'
           memory: 200M
       update_config:
         parallelism: 1
@@ -47,10 +45,8 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '1.5'
           memory: 500M
         reservations:
-          cpus: '1'
           memory: 200M
       update_config:
         parallelism: 1
