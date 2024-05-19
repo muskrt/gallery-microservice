@@ -1,4 +1,4 @@
-# Project Gallery: Microservices CI/CD Pipeline
+# Project 505: Microservices CI/CD Pipeline
 
 ## Description
 
@@ -34,10 +34,57 @@ This project aims to create full CI/CD Pipeline for microservice based applicati
 | Nightly Build  | Prepare k8 set up files | MSP-21  | prepare k8 set up files with terraform and ansible | feature/msp_devops_21 |
 | Nightly Build  | prepare helm repo in s3(aws) | MSP-22  | write a script to create helm repo | feature/msp_devops_22 |
 | Nightly Build  | create ansible playbook | MSP-23  | prepate deployment playbook | feature/msp_devops_23 |
-| Nightly Build  | Unit Test | MSP-24  | implement nigthly pipeline | feature/msp_devops_24 |
-| weekly Build  | Unit Test | MSP-25  | create eksctl config file | feature/msp_devops_25 |
+| Nightly Build  | Unit Test | MSP-24  | implement nigtly pipeline | feature/msp_devops_24 |
+| weekly Build  | Unit Test | MSP-25  | create QA envirionment with eks | feature/msp_devops_25 |
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+| Nightly Build  | Prepare helm package  | MSP-20  | prepare helm package with kompose under nigthly/k8 folder| feature/msp_devops_20 |
+| Nightly Build  | Prepare helm repo | MSP-21  | Create a script to prepare  helm repo with ecr(aws) under nightly folder| feature/msp_devops_21 |
+
+
+
+| Testing Environment Setup | Implement Code Coverage | MSP-12  | Generate Code Coverage Report manually. | feature/msp-12 |
+| Registry Setup for Development | Create Docker Registry for Dev Manually | MSP-14  | Create Docker Registry on Dockerhub  manually . | feature/msp-14 |
+| CI Server Setup | Implement CI Pipeline | MSP-13 | Implement CI pipeline  for all `dev` , `feature` and `bugfix` branches. | feature/msp-13 |
+
+
+
+| QA Automation Setup for Development | Create a QA Automation Environment - Part-1 | MSP-15  | Create a QA Automation Environment with Kubernetes. | feature/msp-15 |
+| QA Automation Setup for Development | Create a QA Automation Environment - Part-2 | MSP-16  | Create a QA Automation Environment with Kubernetes. | feature/msp-16 |
+| QA Automation Setup for Development | Prepare Petlinic Kubernetes YAML Files | MSP-17  | Prepare Petlinic Kubernetes YAML Files. | feature/msp-17 |
+| QA Automation Setup for Development | Prepare a QA Automation Pipeline | MSP-18  | Prepare a QA Automation Pipeline on `dev` branch for Nightly Builds. | feature/msp-18 |
+| QA Setup for Release | Create a QA Infrastructure with eksctl | MSP-19  | Create a Permanent QA Infrastructure for Kubernetes Cluster with eksctl. | feature/msp-19 |
+| QA Setup for Release | Prepare Build Scripts for QA Environment | MSP-20  | Prepare Build Scripts for QA Environment | feature/msp-20 |
+| QA Setup for Release | Build and Deploy App on QA Environment Manually | MSP-21  | Build and Deploy App for QA Environment Manually using Jenkins Jobs. | feature/msp-21 | 
+| QA Setup for Release | Prepare a QA Pipeline | MSP-22  | Prepare a QA Pipeline using Jenkins on `release` branch for Weekly Builds. | feature/msp-22 |
+| Staging and Production Setup | Prepare HA RKE Kubernetes Cluster | MSP-23  | Prepare High-availability RKE Kubernetes Cluster on AWS EC2 | feature/msp-23 |
+| Staging and Production Setup | Install Rancher App on RKE K8s Cluster | MSP-24  | Install Rancher App on RKE Kubernetes Cluster| |
+| Staging and Production Setup | Create Staging and Production Environment with Rancher | MSP-25  | Create Staging and Production Environment with Rancher by creating new cluster for Petclinic | |
+| Staging Deployment Setup | Prepare and Configure Nexus Server | MSP-26  | Create and Configure Nexus Server for Pipelines | feature/msp-26|
+| Staging Deployment Setup | Prepare a Staging Pipeline | MSP-27  | Prepare a Staging Pipeline on Jenkins Server | feature/msp-27|
+| Production Deployment Setup | Prepare a Production Pipeline | MSP-28  | Prepare a Production Pipeline on Jenkins Server | feature/msp-28|
+| Production Deployment Setup | Set Domain Name and TLS for Production | MSP-29  | Set Domain Name and TLS for Production Pipeline with Route 53 | feature/msp-29|
+| Production Deployment Setup | Set Monitoring Tools | MSP-30  | Set Monitoring tools, Prometheus and Grafana | |
 
 
 
